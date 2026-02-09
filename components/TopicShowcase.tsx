@@ -77,15 +77,15 @@ const TopicShowcase: React.FC<TopicShowcaseProps> = ({ onArticleSelect }) => {
         </div>
 
         {/* 2-Column Grid with Fixed Min-Height to prevent layout shift */}
-        {/* Adjusted min-height to 600px to better fit 3 rows without excessive gap */}
-        <div className="min-h-[600px]">
+        {/* Adjusted min-height to 720px for a tighter layout while maintaining stability */}
+        <div className="min-h-[720px]">
             <div 
                 className={`grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10 relative z-10 transition-all duration-300 ease-out ${isAnimating ? 'opacity-0 scale-[0.98]' : 'opacity-100 scale-100'}`}
             >
             {visibleArticles.map((item, index) => (
                 <div 
                 key={item.id} 
-                className="group flex items-start justify-between cursor-pointer border-b border-white/10 pb-8 hover:border-accent-orange/50 transition-colors duration-500"
+                className="group flex h-full items-start justify-between cursor-pointer border-b border-white/10 pb-8 hover:border-accent-orange/50 transition-colors duration-500"
                 onClick={() => onArticleSelect(item)}
                 >
                 {/* Text Content - Left */}
@@ -138,7 +138,7 @@ const TopicShowcase: React.FC<TopicShowcaseProps> = ({ onArticleSelect }) => {
         </div>
         
         {/* Pagination Controls */}
-        <div className="mt-12 pt-8 flex items-center justify-between">
+        <div className="mt-6 flex items-center justify-between">
             
             {/* Status Indicator */}
             <div className="text-xs font-mono text-cream/30 uppercase tracking-widest">
