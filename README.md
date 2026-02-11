@@ -19,3 +19,4 @@ View your app in AI Studio: https://ai.studio/apps/drive/1O8L9oDOXUl70JVvgT4HH97
 3. Run the app:
    `npm run dev`
 new
+调整自动部署
