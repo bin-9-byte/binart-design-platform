@@ -1,13 +1,13 @@
 
 import React, { useState, useEffect } from 'react';
-import { Menu, X, ArrowRight, Search } from 'lucide-react';
+import { Menu, X, ArrowRight, Mail } from 'lucide-react';
 import { NAV_LINKS } from '../constants';
 
 interface NavigationProps {
-  onSearchClick?: () => void;
+  onSubscribeClick?: () => void;
 }
 
-const Navigation: React.FC<NavigationProps> = ({ onSearchClick }) => {
+const Navigation: React.FC<NavigationProps> = ({ onSubscribeClick }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -41,7 +41,8 @@ const Navigation: React.FC<NavigationProps> = ({ onSearchClick }) => {
   return (
     <>
       <nav 
-        className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 border-b ${
+        id="main-navigation"
+        className={`fixed top-0 left-0 w-full z-50 transition-[background-color,border-color,padding-top,padding-bottom,backdrop-filter] duration-500 border-b ${
           isScrolled 
             ? 'bg-charcoal/80 backdrop-blur-md border-white/10 py-4' 
             : 'bg-transparent border-transparent py-8'
@@ -70,10 +71,11 @@ const Navigation: React.FC<NavigationProps> = ({ onSearchClick }) => {
               </a>
             ))}
             <button 
-              onClick={onSearchClick}
+              onClick={onSubscribeClick}
               className="bg-white text-charcoal px-6 py-2 font-display font-bold text-sm tracking-wide hover:bg-accent-orange hover:text-white transition-all duration-300 transform hover:-translate-y-1 flex items-center gap-2"
             >
-              SEARCH
+              <Mail size={16} />
+              SUBSCRIBE
             </button>
           </div>
 
@@ -108,12 +110,12 @@ const Navigation: React.FC<NavigationProps> = ({ onSearchClick }) => {
           <button 
             onClick={() => {
               setIsMenuOpen(false);
-              onSearchClick && onSearchClick();
+              onSubscribeClick && onSubscribeClick();
             }}
             className="mt-12 flex items-center justify-center space-x-2 text-white/50 hover:text-white transition-colors"
           >
-            <span className="text-sm uppercase tracking-widest">Start Searching</span>
-            <Search size={16} />
+            <span className="text-sm uppercase tracking-widest">Subscribe to Newsletter</span>
+            <Mail size={16} />
           </button>
         </div>
       </div>

@@ -8,13 +8,13 @@ import ToolsShowcase from './components/ToolsShowcase';
 import Footer from './components/Footer';
 import ArticleDetail from './components/ArticleDetail';
 import ToolDetail from './components/ToolDetail';
-import SearchOverlay from './components/SearchOverlay';
+import SubscribeOverlay from './components/SubscribeOverlay';
 import { Article, Tool } from './types';
 
 const App: React.FC = () => {
   const [activeArticle, setActiveArticle] = useState<Article | null>(null);
   const [activeTool, setActiveTool] = useState<Tool | null>(null);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isSubscribeOpen, setIsSubscribeOpen] = useState(false);
   
   const scrollPositionRef = useRef(0);
   const isDetailOpen = useRef(false);
@@ -82,7 +82,7 @@ const App: React.FC = () => {
         Navigation is shown on the feed. Detail views have their own back buttons/headers.
       */}
       {isFeedVisible && (
-        <Navigation onSearchClick={() => setIsSearchOpen(true)} />
+        <Navigation onSubscribeClick={() => setIsSubscribeOpen(true)} />
       )}
       
       <main>
@@ -91,7 +91,7 @@ const App: React.FC = () => {
 
       {isFeedVisible && <Footer />}
 
-      <SearchOverlay isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
+      <SubscribeOverlay isOpen={isSubscribeOpen} onClose={() => setIsSubscribeOpen(false)} />
       
       {/* Global Grain Overlay for Texture */}
       <div className="fixed inset-0 pointer-events-none opacity-[0.03] z-[100] mix-blend-overlay">
