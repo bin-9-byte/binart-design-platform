@@ -64,10 +64,10 @@ const App: React.FC = () => {
       <>
         <Hero />
         {/* Added id="discover" for navigation, reverted title to Featured Stories */}
-        <FeaturedSection id="discover" title="Featured Stories" onArticleSelect={handleArticleSelect} />
-        <FeaturedSection title="UX" onArticleSelect={handleArticleSelect} />
-        <FeaturedSection title="Typography" onArticleSelect={handleArticleSelect} />
-        <FeaturedSection title="Guides" onArticleSelect={handleArticleSelect} />
+        <FeaturedSection id="discover" title="Featured Stories" featuredOnly onArticleSelect={handleArticleSelect} />
+        <FeaturedSection title="UX" section="UX" onArticleSelect={handleArticleSelect} />
+        <FeaturedSection title="Typography" section="Typography" onArticleSelect={handleArticleSelect} />
+        <FeaturedSection title="Guides" section="Guides" onArticleSelect={handleArticleSelect} />
         <TopicShowcase onArticleSelect={handleArticleSelect} />
         <ToolsShowcase onToolSelect={handleToolSelect} />
       </>

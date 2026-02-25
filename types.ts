@@ -27,6 +27,8 @@ export interface Article {
   imageUrl: string; // Static preview for cards
   excerpt: string;
   readTime: string;
+  sections?: string[];
+  isFeatured?: boolean;
   blocks?: ContentBlock[]; // Flexible content structure
   mediaType?: 'image' | 'video' | 'gif';
   videoUrl?: string; // For video content

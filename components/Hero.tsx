@@ -45,7 +45,7 @@ const Hero: React.FC = () => {
                  <video 
                     ref={videoRef}
                     className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-700"
-                    src="/hero.mp4" 
+                    src="/videos/hero/hero.mp4" 
                     autoPlay
                     muted
                     loop

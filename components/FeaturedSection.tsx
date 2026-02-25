@@ -7,10 +7,20 @@ import { FEATURED_ARTICLES } from '../constants';
 interface FeaturedSectionProps {
   id?: string;
   title?: string;
+  section?: string;
+  featuredOnly?: boolean;
   onArticleSelect: (article: Article) => void;
 }
 
-const FeaturedSection: React.FC<FeaturedSectionProps> = ({ id, title = "Featured Stories", onArticleSelect }) => {
+const FeaturedSection: React.FC<FeaturedSectionProps> = ({ id, title = "Featured Stories", section, featuredOnly, onArticleSelect }) => {
+  let articles = FEATURED_ARTICLES;
+  if (section) {
+    articles = articles.filter((article) => article.sections?.includes(section));
+  }
+  if (featuredOnly) {
+    articles = articles.filter((article) => article.isFeatured);
+  }
+
   return (
     <section id={id} className="py-24 relative bg-charcoal z-20">
       <div className="container mx-auto px-6 md:px-12">
@@ -26,7 +36,7 @@ const FeaturedSection: React.FC<FeaturedSectionProps> = ({ id, title = "Featured
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
-          {FEATURED_ARTICLES.map((article: Article, index) => (
+          {articles.map((article: Article, index) => (
             <div 
               key={article.id}
               className="group relative cursor-pointer w-full"

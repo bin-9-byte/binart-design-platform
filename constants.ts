@@ -16,7 +16,9 @@ export const FEATURED_ARTICLES: Article[] = [
     date: 'Oct 12, 2024',
     readTime: '8 min',
     excerpt: 'Exploring negative space as the primary active element in modern interface paradigms.',
-    imageUrl: 'https://picsum.photos/1200/800?random=1',
+    imageUrl: '/images/articles/a01/hero.webp',
+    sections: ['UX'],
+    isFeatured: true,
     mediaType: 'image',
     blocks: [
         {
@@ -38,7 +40,7 @@ export const FEATURED_ARTICLES: Article[] = [
         },
         {
             type: 'image',
-            src: 'https://picsum.photos/1200/600?random=10',
+            src: '/images/articles/a01/inline-01.webp',
             caption: 'Fig 1. Visual tension created through asymmetrical whitespace.',
             alt: 'Abstract geometric composition'
         },
@@ -49,8 +51,8 @@ export const FEATURED_ARTICLES: Article[] = [
         {
             type: 'gallery',
             images: [
-                'https://picsum.photos/600/600?random=11',
-                'https://picsum.photos/600/600?random=12'
+                '/images/articles/a01/gallery-01.webp',
+                '/images/articles/a01/gallery-02.webp'
             ]
         },
         {
@@ -86,6 +88,8 @@ export const FEATURED_ARTICLES: Article[] = [
     readTime: '12 min',
     excerpt: 'A deep dive into spatial computing and the limits of human attention in mixed reality.',
     imageUrl: 'https://picsum.photos/1200/800?random=2',
+    sections: ['UX'],
+    isFeatured: true,
     mediaType: 'video',
     videoUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
     blocks: [
@@ -125,6 +129,8 @@ export const FEATURED_ARTICLES: Article[] = [
     readTime: '6 min',
     excerpt: 'How variable fonts are changing the way we perceive emotional tone in digital reading.',
     imageUrl: 'https://picsum.photos/1200/800?random=3', // Static image for card view
+    sections: ['Typography'],
+    isFeatured: true,
     gifUrl: 'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMzM0YjM0MzQ1N2FmMzQ1N2FmMzQ1N2FmMzQ1N2Fm/3o7TKSjRrfIPjeiVyM/giphy.gif', // Animated GIF for detail view
     mediaType: 'gif',
     blocks: [
@@ -175,6 +181,25 @@ export const FEATURED_ARTICLES: Article[] = [
             title: 'Layout Note', 
             text: 'All media elements in this article use the exact same width constraint as the text, ensuring a "fixed" and coordinated vertical rhythm.' 
         }
+    ]
+  },
+  {
+    id: 'g1',
+    title: 'From Brief to Blueprint',
+    category: 'Guides',
+    author: 'BINART Studio',
+    date: 'Oct 01, 2024',
+    readTime: '7 min',
+    excerpt: 'A practical workflow to turn messy requirements into a clear design plan.',
+    imageUrl: '/images/articles/g01/hero.webp',
+    sections: ['Guides'],
+    isFeatured: false,
+    mediaType: 'image',
+    blocks: [
+      { type: 'paragraph', text: 'A good guide is a reusable system: clear inputs, concrete steps, and measurable outputs.' },
+      { type: 'h2', text: 'The Checklist' },
+      { type: 'list', listType: 'ul', items: ['Define constraints and success metrics', 'Map user goals and edge cases', 'Sketch flows before screens', 'Lock typography and spacing tokens'] },
+      { type: 'note', title: 'Tip', text: 'Keep your first iteration lightweight. Clarity beats completeness.' }
     ]
   }
 ];
