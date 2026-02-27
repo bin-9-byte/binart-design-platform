@@ -10,7 +10,7 @@ export const NAV_LINKS = [
 export const FEATURED_ARTICLES: Article[] = [
   {
     id: '1',
-    title: 'The Architecture of Silence',
+    title: 'CHAGEE 和萌友们',
     category: 'Visual Design',
     author: 'Elena Vance',
     date: 'Oct 12, 2024',
@@ -87,11 +87,11 @@ export const FEATURED_ARTICLES: Article[] = [
     date: 'Oct 10, 2024',
     readTime: '12 min',
     excerpt: 'A deep dive into spatial computing and the limits of human attention in mixed reality.',
-    imageUrl: 'https://picsum.photos/1200/800?random=2',
+    imageUrl: '/images/articles/a02/hero.webp',
     sections: ['UX'],
     isFeatured: true,
-    mediaType: 'video',
-    videoUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+    mediaType: 'image',
+    gifUrl: 'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMzM0YjM0MzQ1N2FmMzQ1N2FmMzQ1N2FmMzQ1N2Fm/3o7TKSjRrfIPjeiVyM/giphy.gif',
     blocks: [
         { type: 'paragraph', text: "Augmented Reality presents a unique challenge: the UI is no longer framed by a rectangle, but by the world itself. This fundamental shift requires us to rethink how we present information to avoid overwhelming the user." },
         { type: 'h2', text: 'The 3-Second Rule' },
@@ -128,11 +128,11 @@ export const FEATURED_ARTICLES: Article[] = [
     date: 'Oct 05, 2024',
     readTime: '6 min',
     excerpt: 'How variable fonts are changing the way we perceive emotional tone in digital reading.',
-    imageUrl: 'https://picsum.photos/1200/800?random=3', // Static image for card view
+    imageUrl: '/images/articles/a03/hero.webp', // Static image for card view
     sections: ['Typography'],
-    isFeatured: true,
-    gifUrl: 'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMzM0YjM0MzQ1N2FmMzQ1N2FmMzQ1N2FmMzQ1N2Fm/3o7TKSjRrfIPjeiVyM/giphy.gif', // Animated GIF for detail view
-    mediaType: 'gif',
+    isFeatured: true, // Animated GIF for detail view
+    mediaType: 'video',
+    videoUrl: '/images/articles/a03/hero.mp4', // Local video source
     blocks: [
         { 
             type: 'paragraph', 

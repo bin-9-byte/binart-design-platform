@@ -119,9 +119,9 @@ const TopicShowcase: React.FC<TopicShowcaseProps> = ({ onArticleSelect }) => {
                     <div className="relative w-full h-full overflow-hidden bg-charcoal border border-white/10 group-hover:border-transparent rounded-sm transition-colors duration-500 z-10">
                         <div className="absolute inset-0 bg-charcoal/40 group-hover:bg-transparent transition-colors duration-500 z-10"></div>
                         <img 
-                        src={item.imageUrl} 
-                        alt={item.title} 
-                        className="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transform scale-100 group-hover:scale-110 transition-all duration-700 ease-out"
+                            src={item.imageUrl} 
+                            alt={item.title} 
+                            className="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transform scale-100 group-hover:scale-110 transition-all duration-700 ease-out"
                         />
                     </div>
                 </div>

@@ -1,5 +1,5 @@
 
-import React, { useState, useRef, useLayoutEffect } from 'react';
+import React, { useEffect, useState, useRef, useLayoutEffect } from 'react';
 import { Article, ContentBlock } from '../types';
 import { FEATURED_ARTICLES, TOPIC_DATA } from '../constants';
 import { ArrowLeft, Share2, Play, Pause } from 'lucide-react';
@@ -50,6 +50,26 @@ const ArticleDetail: React.FC<ArticleDetailProps> = ({ article, onBack, onArticl
     window.scrollTo({ top: 0, behavior: 'instant' });
   }, [article.id]);
 
+  useEffect(() => {
+    setIsVideoPlaying(false);
+    if (article.mediaType !== 'video') return;
+
+    const video = videoRef.current;
+    if (!video) return;
+
+    video.muted = true;
+    const maybePromise = video.play();
+
+    if (maybePromise && typeof (maybePromise as Promise<void>).then === 'function') {
+      (maybePromise as Promise<void>)
+        .then(() => setIsVideoPlaying(true))
+        .catch(() => {});
+      return;
+    }
+
+    setIsVideoPlaying(!video.paused);
+  }, [article.id, article.mediaType]);
+
   const toggleVideo = (e: React.MouseEvent) => {
     e.stopPropagation();
     if (videoRef.current) {
@@ -71,6 +91,7 @@ const ArticleDetail: React.FC<ArticleDetailProps> = ({ article, onBack, onArticl
                 src={article.videoUrl}
                 poster={article.imageUrl}
                 className="w-full h-full object-cover"
+                muted
                 playsInline
                 loop
                 onClick={(e) => { e.preventDefault(); /* Click handled by container to toggle */ }}
