@@ -1,5 +1,5 @@
 
-import React, { useState, useRef, useLayoutEffect } from 'react';
+import React, { useEffect, useState, useRef, useLayoutEffect } from 'react';
 import Navigation from './components/Navigation';
 import Hero from './components/Hero';
 import FeaturedSection from './components/FeaturedSection';
@@ -15,9 +15,34 @@ const App: React.FC = () => {
   const [activeArticle, setActiveArticle] = useState<Article | null>(null);
   const [activeTool, setActiveTool] = useState<Tool | null>(null);
   const [isSubscribeOpen, setIsSubscribeOpen] = useState(false);
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+    try {
+      const stored = localStorage.getItem('theme');
+      if (stored === 'light' || stored === 'dark') return stored;
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    } catch {
+      return 'light';
+    }
+  });
   
   const scrollPositionRef = useRef(0);
   const isDetailOpen = useRef(false);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (theme === 'dark') {
+      root.classList.add('dark');
+    } else {
+      root.classList.remove('dark');
+    }
+    try {
+      localStorage.setItem('theme', theme);
+    } catch {}
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
+  };
 
   const handleArticleSelect = (article: Article) => {
     // Save current scroll position before switching
@@ -54,10 +79,10 @@ const App: React.FC = () => {
   // Determine what to render
   const renderContent = () => {
     if (activeArticle) {
-      return <ArticleDetail article={activeArticle} onBack={handleBack} onArticleSelect={handleArticleSelect} />;
+      return <ArticleDetail article={activeArticle} onBack={handleBack} onArticleSelect={handleArticleSelect} theme={theme} onThemeToggle={toggleTheme} />;
     }
     if (activeTool) {
-      return <ToolDetail tool={activeTool} onBack={handleBack} />;
+      return <ToolDetail tool={activeTool} onBack={handleBack} theme={theme} onThemeToggle={toggleTheme} />;
     }
     
     return (
@@ -82,7 +107,7 @@ const App: React.FC = () => {
         Navigation is shown on the feed. Detail views have their own back buttons/headers.
       */}
       {isFeedVisible && (
-        <Navigation onSubscribeClick={() => setIsSubscribeOpen(true)} />
+        <Navigation onSubscribeClick={() => setIsSubscribeOpen(true)} theme={theme} onThemeToggle={toggleTheme} />
       )}
       
       <main>

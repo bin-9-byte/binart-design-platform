@@ -84,7 +84,7 @@ const SubscribeOverlay: React.FC<SubscribeOverlayProps> = ({ isOpen, onClose }) 
 
       {/* Slide-out Panel */}
       <div 
-        className={`absolute top-0 right-0 h-full w-full md:w-[680px] bg-[#121212] border-l border-white/10 shadow-[0_0_100px_rgba(0,0,0,0.8)] transform transition-transform duration-500 cubic-bezier(0.16, 1, 0.3, 1) ${
+        className={`absolute top-0 right-0 h-full w-full md:w-[680px] bg-surface border-l border-line/10 shadow-[0_0_80px_rgba(0,0,0,0.25)] transform transition-transform duration-500 cubic-bezier(0.16, 1, 0.3, 1) ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
@@ -95,7 +95,7 @@ const SubscribeOverlay: React.FC<SubscribeOverlayProps> = ({ isOpen, onClose }) 
         >
           <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest">
             <span className="opacity-0 group-hover:opacity-100 transition-opacity translate-x-2 group-hover:translate-x-0">Close</span>
-            <div className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center bg-white/5 group-hover:bg-white/10 group-hover:border-accent-orange transition-all">
+            <div className="w-10 h-10 rounded-full border border-line/10 flex items-center justify-center bg-muted/5 group-hover:bg-muted/10 group-hover:border-accent-orange transition-all">
                 <X size={20} />
             </div>
           </div>
@@ -105,7 +105,7 @@ const SubscribeOverlay: React.FC<SubscribeOverlayProps> = ({ isOpen, onClose }) 
             {/* Header */}
             <div className="mb-12">
                 <h2 className="font-display font-bold text-5xl md:text-6xl text-cream mb-4">Subscribe</h2>
-                <p className="text-white/60 text-lg max-w-md leading-relaxed">
+                <p className="text-cream/60 text-lg max-w-md leading-relaxed">
                   Join our newsletter to get the latest design stories, tools, and resources delivered straight to your inbox.
                 </p>
             </div>
@@ -115,11 +115,11 @@ const SubscribeOverlay: React.FC<SubscribeOverlayProps> = ({ isOpen, onClose }) 
                 <div className="w-16 h-16 rounded-full bg-green-500/20 flex items-center justify-center mb-6 text-green-400">
                   <Check size={32} />
                 </div>
-                <h3 className="font-display text-2xl font-bold text-white mb-2">You're Subscribed!</h3>
-                <p className="text-white/60 mb-6">Thank you for joining our community. Watch your inbox for updates.</p>
+                <h3 className="font-display text-2xl font-bold text-cream mb-2">You're Subscribed!</h3>
+                <p className="text-cream/60 mb-6">Thank you for joining our community. Watch your inbox for updates.</p>
                 <button 
                   onClick={onClose}
-                  className="px-8 py-3 bg-white text-black font-bold uppercase tracking-widest hover:bg-green-400 transition-colors"
+                  className="px-8 py-3 bg-muted/5 text-cream border border-line/10 font-bold uppercase tracking-widest hover:border-green-400 hover:text-green-400 transition-colors"
                 >
                   Continue Reading
                 </button>
@@ -127,7 +127,7 @@ const SubscribeOverlay: React.FC<SubscribeOverlayProps> = ({ isOpen, onClose }) 
             ) : (
               /* Input Form */
               <form onSubmit={handleSubmit} className="relative group mb-16">
-                  <Mail className="absolute left-0 top-1/2 -translate-y-1/2 text-white/30 group-focus-within:text-accent-orange transition-colors" size={32} />
+                  <Mail className="absolute left-0 top-1/2 -translate-y-1/2 text-cream/40 group-focus-within:text-accent-orange transition-colors" size={32} />
                   <input 
                       ref={inputRef}
                       type="email" 
@@ -135,12 +135,12 @@ const SubscribeOverlay: React.FC<SubscribeOverlayProps> = ({ isOpen, onClose }) 
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="Enter your email address..."
                       disabled={status === 'submitting'}
-                      className="w-full bg-transparent border-b border-white/20 py-6 pl-12 pr-20 text-2xl md:text-3xl font-display text-cream placeholder-white/10 focus:outline-none focus:border-accent-orange transition-colors disabled:opacity-50"
+                      className="w-full bg-transparent border-b border-line/20 py-6 pl-12 pr-20 text-2xl md:text-3xl font-display text-cream placeholder-cream/40 focus:outline-none focus:border-accent-orange transition-colors disabled:opacity-50"
                   />
                   <button 
                     type="submit"
                     disabled={status === 'submitting' || !email}
-                    className="absolute right-0 top-1/2 -translate-y-1/2 flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-white/50 hover:text-accent-orange disabled:opacity-30 disabled:hover:text-white/50 transition-colors"
+                    className="absolute right-0 top-1/2 -translate-y-1/2 flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-cream/60 hover:text-accent-orange disabled:opacity-30 disabled:hover:text-cream/60 transition-colors"
                   >
                     {status === 'submitting' ? 'Joining...' : 'Join'}
                     <ArrowRight size={16} />
@@ -150,10 +150,10 @@ const SubscribeOverlay: React.FC<SubscribeOverlayProps> = ({ isOpen, onClose }) 
 
             {status !== 'success' && (
               <div className="mt-8">
-                  <h3 className="text-xs font-bold uppercase tracking-widest text-white/30 mb-4">What you'll get</h3>
+                  <h3 className="text-xs font-bold uppercase tracking-widest text-cream/50 mb-4">What you'll get</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {['Weekly Design Trends', 'Exclusive Tutorials', 'New Tool Alerts', 'Community Highlights'].map((item, idx) => (
-                      <div key={idx} className="flex items-center gap-3 text-white/50">
+                      <div key={idx} className="flex items-center gap-3 text-cream/70">
                         <div className="w-1.5 h-1.5 rounded-full bg-accent-orange"></div>
                         <span className="text-sm">{item}</span>
                       </div>

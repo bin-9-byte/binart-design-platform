@@ -2,7 +2,7 @@
 import React, { useEffect, useState, useRef, useLayoutEffect } from 'react';
 import { Article, ContentBlock } from '../types';
 import { FEATURED_ARTICLES, TOPIC_DATA } from '../constants';
-import { ArrowLeft, Share2, Play, Pause } from 'lucide-react';
+import { ArrowLeft, Share2, Play, Pause, Sun, Moon } from 'lucide-react';
 import { 
   TextBlock, 
   HeadingBlock, 
@@ -19,6 +19,8 @@ interface ArticleDetailProps {
   article: Article;
   onBack: () => void;
   onArticleSelect?: (article: Article) => void;
+  theme: 'light' | 'dark';
+  onThemeToggle: () => void;
 }
 
 const BlockComponents: Record<string, React.FC<{ block: ContentBlock }>> = {
@@ -33,7 +35,7 @@ const BlockComponents: Record<string, React.FC<{ block: ContentBlock }>> = {
   video: VideoBlock
 };
 
-const ArticleDetail: React.FC<ArticleDetailProps> = ({ article, onBack, onArticleSelect }) => {
+const ArticleDetail: React.FC<ArticleDetailProps> = ({ article, onBack, onArticleSelect, theme, onThemeToggle }) => {
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -96,14 +98,14 @@ const ArticleDetail: React.FC<ArticleDetailProps> = ({ article, onBack, onArticl
                 loop
                 onClick={(e) => { e.preventDefault(); /* Click handled by container to toggle */ }}
             />
-            <div className="absolute inset-0 bg-charcoal/20 group-hover:bg-transparent transition-colors duration-500 pointer-events-none"></div>
+            <div className="absolute inset-0 bg-muted/10 group-hover:bg-transparent transition-colors duration-500 pointer-events-none"></div>
             
             {/* Functional Play/Pause Control */}
-            <div className="absolute bottom-6 right-6 w-12 h-12 bg-charcoal/90 backdrop-blur rounded-full flex items-center justify-center border border-white/10 group-hover:scale-110 transition-transform duration-300 z-20 shadow-lg">
+            <div className="absolute bottom-6 right-6 w-12 h-12 bg-charcoal/90 backdrop-blur rounded-full flex items-center justify-center border border-line/10 group-hover:scale-110 transition-transform duration-300 z-20 shadow-lg">
                 {isVideoPlaying ? (
-                    <Pause size={16} fill="currentColor" className="text-white" />
+                    <Pause size={16} fill="currentColor" className="text-cream" />
                 ) : (
-                    <Play size={16} fill="currentColor" className="text-white ml-1" />
+                    <Play size={16} fill="currentColor" className="text-cream ml-1" />
                 )}
             </div>
         </div>
@@ -143,14 +145,21 @@ const ArticleDetail: React.FC<ArticleDetailProps> = ({ article, onBack, onArticl
       <div className="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-6 md:px-12 py-6 pointer-events-none">
         <button 
             onClick={onBack}
-            className="pointer-events-auto flex items-center space-x-2 text-cream hover:text-accent-orange transition-colors group bg-charcoal/80 backdrop-blur-md px-4 py-2 rounded-full border border-white/10 shadow-lg"
+            className="pointer-events-auto flex items-center space-x-2 text-cream hover:text-accent-orange transition-colors group bg-charcoal/80 backdrop-blur-md px-4 py-2 rounded-full border border-line/10 shadow-lg"
         >
             <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
             <span className="text-xs font-bold uppercase tracking-widest">Back</span>
         </button>
 
         <div className="flex gap-2">
-            <button className="pointer-events-auto text-cream hover:text-white transition-colors bg-charcoal/80 backdrop-blur-md p-2.5 rounded-full border border-white/10 shadow-lg">
+            <button
+                onClick={onThemeToggle}
+                aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+                className="pointer-events-auto text-cream hover:text-accent-orange transition-colors bg-charcoal/80 backdrop-blur-md p-2.5 rounded-full border border-line/10 shadow-lg"
+            >
+                {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
+            </button>
+            <button className="pointer-events-auto text-cream hover:text-cream transition-colors bg-charcoal/80 backdrop-blur-md p-2.5 rounded-full border border-line/10 shadow-lg">
                 <Share2 size={16} />
             </button>
         </div>
@@ -158,13 +167,13 @@ const ArticleDetail: React.FC<ArticleDetailProps> = ({ article, onBack, onArticl
 
       <div className="container mx-auto px-4 md:px-8 lg:px-12 pt-32">
         {/* 1. Hero Image/Video Section */}
-        <div className="w-full aspect-video md:aspect-[21/10] overflow-hidden rounded-sm relative mb-16 bg-[#0a0a0a] border border-white/5">
+        <div className="w-full aspect-video md:aspect-[21/10] overflow-hidden rounded-sm relative mb-16 bg-surface border border-line/5">
             {renderHeroMedia()}
         </div>
 
         {/* 2. Title & Metadata Header (Centered) */}
-        <div className="max-w-4xl mx-auto text-center mb-20 border-b border-white/5 pb-16">
-             <h1 className="font-display font-bold text-5xl md:text-6xl lg:text-7xl leading-[0.95] tracking-tight text-white mb-8">
+        <div className="max-w-4xl mx-auto text-center mb-20 border-b border-line/5 pb-16">
+             <h1 className="font-display font-bold text-5xl md:text-6xl lg:text-7xl leading-[0.95] tracking-tight text-cream mb-8">
                 {article.title}
              </h1>
 
@@ -173,7 +182,7 @@ const ArticleDetail: React.FC<ArticleDetailProps> = ({ article, onBack, onArticl
              </p>
 
              <div className="flex flex-col md:flex-row items-center justify-center gap-4 text-xs font-mono uppercase tracking-widest text-cream/40">
-                <span className="text-white">By {article.author}</span>
+                <span className="text-cream">By {article.author}</span>
                 <span className="hidden md:inline">•</span>
                 <span>{article.category}</span>
                 <span className="hidden md:inline">•</span>
@@ -208,16 +217,16 @@ const ArticleDetail: React.FC<ArticleDetailProps> = ({ article, onBack, onArticl
       </div>
 
       {/* Footer Navigation */}
-      <div className="bg-[#0f0f0f] py-24 border-t border-white/5">
+      <div className="bg-surface py-24 border-t border-line/5">
          <div className="container mx-auto px-6 text-center">
             <p className="text-accent-orange/80 text-xs font-bold uppercase tracking-widest mb-6">Read Next</p>
             <h3 
                 onClick={() => onArticleSelect?.(nextArticle)}
-                className="font-display text-3xl md:text-5xl font-bold text-white mb-8 max-w-3xl mx-auto hover:text-cream/80 cursor-pointer transition-colors"
+                className="font-display text-3xl md:text-5xl font-bold text-cream mb-8 max-w-3xl mx-auto hover:text-cream/80 cursor-pointer transition-colors"
             >
                 {nextArticle.title}
             </h3>
-            <button onClick={onBack} className="text-cream/40 hover:text-white transition-colors text-sm uppercase tracking-widest border-b border-transparent hover:border-white/20 pb-1">
+            <button onClick={onBack} className="text-cream/40 hover:text-cream transition-colors text-sm uppercase tracking-widest border-b border-transparent hover:border-line/20 pb-1">
                 Back to Feed
             </button>
          </div>

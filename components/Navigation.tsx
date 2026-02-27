@@ -1,13 +1,15 @@
 
 import React, { useState, useEffect } from 'react';
-import { Menu, X, ArrowRight, Mail } from 'lucide-react';
+import { Menu, X, ArrowRight, Mail, Sun, Moon } from 'lucide-react';
 import { NAV_LINKS } from '../constants';
 
 interface NavigationProps {
   onSubscribeClick?: () => void;
+  theme: 'light' | 'dark';
+  onThemeToggle: () => void;
 }
 
-const Navigation: React.FC<NavigationProps> = ({ onSubscribeClick }) => {
+const Navigation: React.FC<NavigationProps> = ({ onSubscribeClick, theme, onThemeToggle }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -44,7 +46,7 @@ const Navigation: React.FC<NavigationProps> = ({ onSubscribeClick }) => {
         id="main-navigation"
         className={`fixed top-0 left-0 w-full z-50 transition-[background-color,border-color,padding-top,padding-bottom,backdrop-filter] duration-500 border-b ${
           isScrolled 
-            ? 'bg-charcoal/80 backdrop-blur-md border-white/10 py-4' 
+            ? 'bg-charcoal/80 backdrop-blur-md border-line/10 py-4' 
             : 'bg-transparent border-transparent py-8'
         }`}
       >
@@ -64,15 +66,23 @@ const Navigation: React.FC<NavigationProps> = ({ onSubscribeClick }) => {
                 key={link.name} 
                 href={link.href}
                 onClick={(e) => handleNavClick(e, link.href)}
-                className="font-sans text-sm tracking-widest uppercase text-cream/70 hover:text-white transition-colors relative group cursor-pointer"
+                className="font-sans text-sm tracking-widest uppercase text-cream/70 hover:text-cream transition-colors relative group cursor-pointer"
               >
                 {link.name}
                 <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-1 h-1 bg-accent-orange rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
               </a>
             ))}
+            <button
+              type="button"
+              onClick={onThemeToggle}
+              aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+              className="w-10 h-10 rounded-full border border-line/10 flex items-center justify-center bg-muted/5 hover:bg-muted/10 hover:border-accent-orange transition-all text-cream/70 hover:text-accent-orange"
+            >
+              {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+            </button>
             <button 
               onClick={onSubscribeClick}
-              className="bg-white text-charcoal px-6 py-2 font-display font-bold text-sm tracking-wide hover:bg-accent-orange hover:text-white transition-all duration-300 transform hover:-translate-y-1 flex items-center gap-2"
+              className="bg-accent-orange text-white px-6 py-2 font-display font-bold text-sm tracking-wide hover:bg-accent-blue transition-all duration-300 transform hover:-translate-y-1 flex items-center gap-2"
             >
               <Mail size={16} />
               SUBSCRIBE
@@ -107,12 +117,23 @@ const Navigation: React.FC<NavigationProps> = ({ onSubscribeClick }) => {
               {link.name}
             </a>
           ))}
+          <button
+            type="button"
+            onClick={() => {
+              onThemeToggle();
+              setIsMenuOpen(false);
+            }}
+            className="mt-8 flex items-center justify-center space-x-2 text-cream/60 hover:text-accent-orange transition-colors"
+          >
+            {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
+            <span className="text-sm uppercase tracking-widest">{theme === 'dark' ? 'Light mode' : 'Dark mode'}</span>
+          </button>
           <button 
             onClick={() => {
               setIsMenuOpen(false);
               onSubscribeClick && onSubscribeClick();
             }}
-            className="mt-12 flex items-center justify-center space-x-2 text-white/50 hover:text-white transition-colors"
+            className="mt-12 flex items-center justify-center space-x-2 text-cream/60 hover:text-cream transition-colors"
           >
             <span className="text-sm uppercase tracking-widest">Subscribe to Newsletter</span>
             <Mail size={16} />

@@ -46,7 +46,7 @@ const ToolsShowcase: React.FC<ToolsShowcaseProps> = ({ onToolSelect }) => {
   };
 
   return (
-    <section id="tools" className="py-24 bg-[#0a0a0a] border-t border-white/5 relative z-20">
+    <section id="tools" className="py-24 bg-charcoal border-t border-line/5 relative z-20">
       <div className="container mx-auto px-6 md:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
           
@@ -58,7 +58,7 @@ const ToolsShowcase: React.FC<ToolsShowcaseProps> = ({ onToolSelect }) => {
                  <p className="text-cream/60 leading-relaxed mb-8">
                    A selection of resources to accelerate your workflow and expand your creative capability. Updated weekly.
                  </p>
-                 <a href="#" className="text-sm font-bold uppercase tracking-widest text-accent-orange hover:text-white transition-colors border-b border-accent-orange/30 pb-1">
+                 <a href="#" className="text-sm font-bold uppercase tracking-widest text-accent-orange hover:text-cream transition-colors border-b border-accent-orange/30 pb-1">
                     Submit a tool
                  </a>
              </div>
@@ -76,7 +76,7 @@ const ToolsShowcase: React.FC<ToolsShowcaseProps> = ({ onToolSelect }) => {
                     <div 
                         key={tool.id}
                         onClick={() => onToolSelect && onToolSelect(tool)}
-                        className="group bg-white/5 border border-white/10 p-6 hover:bg-white/10 transition-all duration-300 relative overflow-hidden cursor-pointer flex flex-col justify-between h-full min-h-[240px]"
+                        className="group bg-muted/5 border border-line/10 p-6 hover:bg-muted/10 transition-all duration-300 relative overflow-hidden cursor-pointer flex flex-col justify-between h-full min-h-[240px]"
                     >
                         <div className={`absolute top-0 right-0 w-24 h-24 ${tool.color} blur-[60px] opacity-20 group-hover:opacity-40 transition-opacity`}></div>
                         
@@ -92,8 +92,8 @@ const ToolsShowcase: React.FC<ToolsShowcaseProps> = ({ onToolSelect }) => {
                             </p>
                         </div>
 
-                        <div className="relative z-10 mt-auto pt-4 border-t border-white/5 group-hover:border-white/10 transition-colors">
-                            <div className="flex items-center space-x-2 text-[10px] font-bold uppercase tracking-widest text-cream/40 group-hover:text-white transition-colors">
+                        <div className="relative z-10 mt-auto pt-4 border-t border-line/10 group-hover:border-line/10 transition-colors">
+                            <div className="flex items-center space-x-2 text-[10px] font-bold uppercase tracking-widest text-cream/40 group-hover:text-cream transition-colors">
                                 <span>Get Tool</span>
                                 <ArrowRight size={10} className="group-hover:translate-x-1 transition-transform" />
                             </div>
@@ -117,19 +117,19 @@ const ToolsShowcase: React.FC<ToolsShowcaseProps> = ({ onToolSelect }) => {
                     <button 
                         onClick={() => handlePageChange('prev')}
                         disabled={currentPage === 1}
-                        className={`w-10 h-10 rounded-full border border-white/10 flex items-center justify-center transition-all duration-300 ${currentPage === 1 ? 'opacity-30 cursor-not-allowed' : 'hover:border-accent-orange hover:text-accent-orange cursor-pointer'}`}
+                        className={`w-10 h-10 rounded-full border border-line/10 flex items-center justify-center transition-all duration-300 ${currentPage === 1 ? 'opacity-30 cursor-not-allowed' : 'hover:border-accent-orange hover:text-accent-orange cursor-pointer'}`}
                     >
                         <ArrowLeft size={16} />
                     </button>
 
                     <div className="font-display font-bold text-xl text-cream select-none">
-                        {String(currentPage).padStart(2, '0')} <span className="text-white/20 text-sm font-normal mx-1">/</span> <span className="text-white/40 text-lg">{String(totalPages).padStart(2, '0')}</span>
+                        {String(currentPage).padStart(2, '0')} <span className="text-cream/30 text-sm font-normal mx-1">/</span> <span className="text-cream/50 text-lg">{String(totalPages).padStart(2, '0')}</span>
                     </div>
 
                     <button 
                         onClick={() => handlePageChange('next')}
                         disabled={currentPage === totalPages}
-                        className={`w-10 h-10 rounded-full border border-white/10 flex items-center justify-center transition-all duration-300 ${currentPage === totalPages ? 'opacity-30 cursor-not-allowed' : 'hover:border-accent-orange hover:text-accent-orange cursor-pointer'}`}
+                        className={`w-10 h-10 rounded-full border border-line/10 flex items-center justify-center transition-all duration-300 ${currentPage === totalPages ? 'opacity-30 cursor-not-allowed' : 'hover:border-accent-orange hover:text-accent-orange cursor-pointer'}`}
                     >
                         <ArrowRight size={16} />
                     </button>

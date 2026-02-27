@@ -44,7 +44,7 @@ const TopicShowcase: React.FC<TopicShowcaseProps> = ({ onArticleSelect }) => {
   return (
     <section id="archive" className="py-24 bg-charcoal relative z-20">
        {/* Background Grid Pattern */}
-       <div className="absolute inset-0 bg-[radial-gradient(#ffffff08_1px,transparent_1px)] [background-size:20px_20px] opacity-20 pointer-events-none"></div>
+       <div className="absolute inset-0 bg-[radial-gradient(#00000010_1px,transparent_1px)] dark:bg-[radial-gradient(#ffffff10_1px,transparent_1px)] [background-size:20px_20px] opacity-20 pointer-events-none"></div>
 
       <div className="container mx-auto px-6 md:px-12">
         {/* Header - Matching FeaturedSection style */}
@@ -66,8 +66,8 @@ const TopicShowcase: React.FC<TopicShowcaseProps> = ({ onArticleSelect }) => {
                     onClick={() => setActiveCategory(cat)}
                     className={`px-4 py-1.5 rounded-full border transition-all duration-300 text-xs tracking-wide uppercase ${
                     activeCategory === cat 
-                        ? 'bg-cream text-charcoal border-cream font-bold' 
-                        : 'bg-transparent text-cream/60 border-white/20 hover:border-white/60'
+                        ? 'bg-accent-orange text-white border-accent-orange font-bold' 
+                        : 'bg-transparent text-cream/60 border-line/20 hover:border-line/50 hover:text-cream'
                     }`}
                 >
                     {cat}
@@ -85,7 +85,7 @@ const TopicShowcase: React.FC<TopicShowcaseProps> = ({ onArticleSelect }) => {
             {visibleArticles.map((item, index) => (
                 <div 
                 key={item.id} 
-                className="group flex h-full items-start justify-between cursor-pointer border-b border-white/10 pb-8 hover:border-accent-orange/50 transition-colors duration-500"
+                className="group flex h-full items-start justify-between cursor-pointer border-b border-line/10 pb-8 hover:border-accent-orange/50 transition-colors duration-500"
                 onClick={() => onArticleSelect(item)}
                 >
                 {/* Text Content - Left */}
@@ -96,7 +96,7 @@ const TopicShowcase: React.FC<TopicShowcaseProps> = ({ onArticleSelect }) => {
                             <span className="w-1 h-1 bg-accent-orange rounded-full"></span>
                             <span className="uppercase tracking-wider">{item.category}</span>
                         </div>
-                        <h3 className="font-display text-2xl font-bold text-cream group-hover:text-white transition-colors leading-tight mb-3">
+                        <h3 className="font-display text-2xl font-bold text-cream group-hover:text-accent-orange transition-colors leading-tight mb-3">
                             {item.title}
                         </h3>
                         <p className="text-cream/70 text-sm leading-relaxed line-clamp-2 mb-4">
@@ -116,8 +116,8 @@ const TopicShowcase: React.FC<TopicShowcaseProps> = ({ onArticleSelect }) => {
                     <div className="absolute inset-0 bg-accent-orange z-0 opacity-0 group-hover:opacity-100 group-hover:translate-x-2 group-hover:translate-y-2 transition-all duration-500 ease-out rounded-sm"></div>
                     
                     {/* Main Image Container */}
-                    <div className="relative w-full h-full overflow-hidden bg-charcoal border border-white/10 group-hover:border-transparent rounded-sm transition-colors duration-500 z-10">
-                        <div className="absolute inset-0 bg-charcoal/40 group-hover:bg-transparent transition-colors duration-500 z-10"></div>
+                    <div className="relative w-full h-full overflow-hidden bg-charcoal border border-line/10 group-hover:border-transparent rounded-sm transition-colors duration-500 z-10">
+                        <div className="absolute inset-0 bg-muted/10 group-hover:bg-transparent transition-colors duration-500 z-10"></div>
                         <img 
                             src={item.imageUrl} 
                             alt={item.title} 
@@ -151,19 +151,19 @@ const TopicShowcase: React.FC<TopicShowcaseProps> = ({ onArticleSelect }) => {
                 <button 
                     onClick={() => handlePageChange('prev')}
                     disabled={currentPage === 1}
-                    className={`w-10 h-10 rounded-full border border-white/10 flex items-center justify-center transition-all duration-300 ${currentPage === 1 ? 'opacity-30 cursor-not-allowed' : 'hover:border-accent-orange hover:text-accent-orange cursor-pointer'}`}
+                    className={`w-10 h-10 rounded-full border border-line/10 flex items-center justify-center transition-all duration-300 ${currentPage === 1 ? 'opacity-30 cursor-not-allowed' : 'hover:border-accent-orange hover:text-accent-orange cursor-pointer'}`}
                 >
                     <ArrowLeft size={16} />
                 </button>
 
                 <div className="font-display font-bold text-xl text-cream select-none">
-                    {String(currentPage).padStart(2, '0')} <span className="text-white/20 text-sm font-normal mx-1">/</span> <span className="text-white/40 text-lg">{String(totalPages).padStart(2, '0')}</span>
+                    {String(currentPage).padStart(2, '0')} <span className="text-cream/30 text-sm font-normal mx-1">/</span> <span className="text-cream/50 text-lg">{String(totalPages).padStart(2, '0')}</span>
                 </div>
 
                 <button 
                     onClick={() => handlePageChange('next')}
                     disabled={currentPage === totalPages}
-                    className={`w-10 h-10 rounded-full border border-white/10 flex items-center justify-center transition-all duration-300 ${currentPage === totalPages ? 'opacity-30 cursor-not-allowed' : 'hover:border-accent-orange hover:text-accent-orange cursor-pointer'}`}
+                    className={`w-10 h-10 rounded-full border border-line/10 flex items-center justify-center transition-all duration-300 ${currentPage === totalPages ? 'opacity-30 cursor-not-allowed' : 'hover:border-accent-orange hover:text-accent-orange cursor-pointer'}`}
                 >
                     <ArrowRight size={16} />
                 </button>

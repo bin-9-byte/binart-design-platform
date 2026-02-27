@@ -21,7 +21,7 @@ const Hero: React.FC = () => {
     <section className="relative min-h-screen flex items-center bg-charcoal pt-32 pb-20 overflow-hidden">
         {/* Background Elements - Warmer/Neutral Tones */}
         <div className="absolute top-[-20%] left-[-10%] w-[800px] h-[800px] bg-accent-orange/5 rounded-full blur-[120px] pointer-events-none"></div>
-        <div className="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] bg-white/5 rounded-full blur-[100px] pointer-events-none"></div>
+        <div className="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] bg-muted/5 rounded-full blur-[100px] pointer-events-none"></div>
 
         <div className="container mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center relative z-10">
             {/* Left Content */}
@@ -39,7 +39,7 @@ const Hero: React.FC = () => {
             </div>
 
             {/* Right Content - Video Player */}
-            <div className="relative w-full aspect-square bg-[#0a0a0a] overflow-hidden border border-white/10 shadow-2xl ring-1 ring-white/5 group rounded-2xl">
+            <div className="relative w-full aspect-square bg-surface overflow-hidden border border-line/10 shadow-2xl ring-1 ring-line/5 group rounded-2xl">
                  
                  {/* Video Element */}
                  <video 
@@ -53,13 +53,13 @@ const Hero: React.FC = () => {
                  />
                  
                  {/* Optional Overlay */}
-                 <div className="absolute inset-0 bg-gradient-to-tr from-charcoal/40 to-transparent pointer-events-none"></div>
+                 <div className="absolute inset-0 bg-gradient-to-tr from-black/30 to-transparent pointer-events-none"></div>
 
                  {/* Play/Pause Button Overlay */}
                  <div className="absolute bottom-6 right-6 z-20">
                      <button 
                         onClick={toggleVideo}
-                        className="w-10 h-10 md:w-12 md:h-12 bg-cream text-charcoal rounded-full flex items-center justify-center cursor-pointer hover:scale-105 transition-transform shadow-lg group-hover:bg-accent-orange group-hover:text-white"
+                        className="w-10 h-10 md:w-12 md:h-12 bg-surface text-cream border border-line/10 rounded-full flex items-center justify-center cursor-pointer hover:scale-105 transition-transform shadow-lg group-hover:bg-accent-orange group-hover:text-white group-hover:border-accent-orange"
                      >
                          {isPlaying ? (
                              <Pause className="w-4 h-4 md:w-5 md:h-5 transition-colors duration-300" fill="currentColor" />

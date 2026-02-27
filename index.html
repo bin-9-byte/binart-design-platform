@@ -6,11 +6,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Binart - Design & Research</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      (() => {
+        try {
+          const stored = localStorage.getItem('theme');
+          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          const theme = stored === 'light' || stored === 'dark' ? stored : (prefersDark ? 'dark' : 'light');
+          if (theme === 'dark') document.documentElement.classList.add('dark');
+        } catch {}
+      })();
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script>
       tailwind.config = {
+        darkMode: 'class',
         theme: {
           extend: {
             fontFamily: {
@@ -18,10 +29,13 @@
               display: ['Space Grotesk', 'sans-serif'],
             },
             colors: {
-              charcoal: '#121212',
-              cream: '#F4F1EA',
-              'accent-orange': '#FF4D00',
-              'accent-blue': '#4338CA',
+              charcoal: 'rgb(var(--color-bg) / <alpha-value>)',
+              cream: 'rgb(var(--color-fg) / <alpha-value>)',
+              surface: 'rgb(var(--color-surface) / <alpha-value>)',
+              muted: 'rgb(var(--color-muted) / <alpha-value>)',
+              line: 'rgb(var(--color-line) / <alpha-value>)',
+              'accent-orange': 'rgb(var(--color-accent) / <alpha-value>)',
+              'accent-blue': 'rgb(var(--color-accent-strong) / <alpha-value>)',
             },
             animation: {
               'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
@@ -42,6 +56,26 @@
       }
     </script>
     <style>
+      :root {
+        --color-bg: 255 255 255;
+        --color-fg: 32 33 36;
+        --color-surface: 248 249 250;
+        --color-muted: 0 0 0;
+        --color-line: 0 0 0;
+        --color-accent: 26 115 232;
+        --color-accent-strong: 23 78 166;
+        --scroll-track: 241 243 244;
+        --scroll-thumb: 218 220 224;
+      }
+      html.dark {
+        --color-bg: 18 18 18;
+        --color-fg: 232 234 237;
+        --color-surface: 32 33 36;
+        --color-muted: 255 255 255;
+        --color-line: 255 255 255;
+        --scroll-track: 32 33 36;
+        --scroll-thumb: 60 64 67;
+      }
       html {
         /* Removed scroll-behavior: smooth to prevent unwanted scrolling animation during page transitions */
         scroll-padding-top: 100px; /* Offset for fixed header */
@@ -51,23 +85,26 @@
         width: 8px;
       }
       ::-webkit-scrollbar-track {
-        background: #121212; 
+        background: rgb(var(--scroll-track)); 
       }
       ::-webkit-scrollbar-thumb {
-        background: #333; 
+        background: rgb(var(--scroll-thumb)); 
         border-radius: 4px;
       }
       ::-webkit-scrollbar-thumb:hover {
-        background: #FF4D00; 
+        background: #1A73E8; 
       }
       body {
-        background-color: #121212;
-        color: #F4F1EA;
+        background-color: rgb(var(--color-bg));
+        color: rgb(var(--color-fg));
         overflow-x: hidden;
       }
       .text-outline {
-        -webkit-text-stroke: 1px rgba(244, 241, 234, 0.3);
+        -webkit-text-stroke: 1px rgba(32, 33, 36, 0.25);
         color: transparent;
+      }
+      html.dark .text-outline {
+        -webkit-text-stroke: 1px rgba(232, 234, 237, 0.25);
       }
       .hover-reveal-image {
         transition: clip-path 0.5s ease-in-out;

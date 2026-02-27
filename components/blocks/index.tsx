@@ -8,7 +8,7 @@ export const TextBlock: React.FC<{ block: ContentBlock }> = ({ block }) => (
 );
 
 export const HeadingBlock: React.FC<{ block: ContentBlock }> = ({ block }) => (
-  <h2 className="font-display text-3xl font-bold text-white mt-16 mb-6">
+  <h2 className="font-display text-3xl font-bold text-cream mt-16 mb-6">
     {block.text}
   </h2>
 );
@@ -18,7 +18,7 @@ export const ImageBlock: React.FC<{ block: ContentBlock }> = ({ block }) => (
     <img 
         src={block.src} 
         alt={block.alt || 'Article image'} 
-        className="w-full h-auto rounded-sm shadow-2xl border border-white/5"
+        className="w-full h-auto rounded-sm shadow-2xl border border-line/10"
     />
     {block.caption && (
         <p className="mt-3 text-center text-xs font-mono text-cream/40">{block.caption}</p>
@@ -53,7 +53,7 @@ export const DividerBlock: React.FC = () => (
 );
 
 export const NoteBlock: React.FC<{ block: ContentBlock }> = ({ block }) => (
-    <div className="my-12 bg-white/5 border-l-2 border-accent-orange p-6 rounded-r-lg">
+    <div className="my-12 bg-muted/5 border-l-2 border-accent-orange p-6 rounded-r-lg">
         {block.title && (
             <h4 className="font-display text-accent-orange font-bold text-lg mb-2">{block.title}</h4>
         )}
@@ -82,7 +82,7 @@ export const VideoBlock: React.FC<{ block: ContentBlock }> = ({ block }) => (
             controls
             playsInline
             loop
-            className="w-full h-auto rounded-sm shadow-2xl border border-white/5 bg-black"
+            className="w-full h-auto rounded-sm shadow-2xl border border-line/10 bg-black"
         />
         {block.caption && (
             <p className="mt-3 text-center text-xs font-mono text-cream/40">{block.caption}</p>
