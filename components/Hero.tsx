@@ -19,10 +19,6 @@ const Hero: React.FC = () => {
 
   return (
     <section className="relative min-h-screen flex items-center bg-charcoal pt-32 pb-20 overflow-hidden">
-        {/* Background Elements - Warmer/Neutral Tones */}
-        <div className="absolute top-[-20%] left-[-10%] w-[800px] h-[800px] bg-accent-orange/5 rounded-full blur-[120px] pointer-events-none"></div>
-        <div className="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] bg-muted/5 rounded-full blur-[100px] pointer-events-none"></div>
-
         <div className="container mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center relative z-10">
             {/* Left Content */}
             <div className="flex flex-col items-start">
