@@ -49,7 +49,7 @@ const ArticleDetail: React.FC<ArticleDetailProps> = ({ article, onBack, onArticl
 
   // Scroll to top on mount immediately
   useLayoutEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'instant' });
+    window.scrollTo({ top: 0, behavior: 'auto' });
   }, [article.id]);
 
   useEffect(() => {
@@ -93,15 +93,16 @@ const ArticleDetail: React.FC<ArticleDetailProps> = ({ article, onBack, onArticl
                 src={article.videoUrl}
                 poster={article.imageUrl}
                 className="w-full h-full object-cover"
+                style={{ viewTransitionName: 'hero-image' }}
                 muted
                 playsInline
                 loop
                 onClick={(e) => { e.preventDefault(); /* Click handled by container to toggle */ }}
             />
-            <div className="absolute inset-0 bg-muted/10 group-hover:bg-transparent transition-colors duration-500 pointer-events-none"></div>
+            <div className="absolute inset-0 bg-muted/10 group-hover:bg-transparent transition-colors duration-base ease-standard pointer-events-none"></div>
             
             {/* Functional Play/Pause Control */}
-            <div className="absolute bottom-6 right-6 w-12 h-12 bg-charcoal/90 backdrop-blur rounded-full flex items-center justify-center border border-line/10 group-hover:scale-110 transition-transform duration-300 z-20 shadow-lg">
+            <div className="absolute bottom-6 right-6 w-12 h-12 bg-charcoal/90 backdrop-blur rounded-full flex items-center justify-center border border-line/10 group-hover:scale-110 transition-transform duration-base ease-standard z-20 shadow-lg">
                 {isVideoPlaying ? (
                     <Pause size={16} fill="currentColor" className="text-cream" />
                 ) : (
@@ -120,6 +121,7 @@ const ArticleDetail: React.FC<ArticleDetailProps> = ({ article, onBack, onArticl
                 src={article.gifUrl || article.imageUrl} 
                 alt={article.title} 
                 className="w-full h-full object-cover"
+                style={{ viewTransitionName: 'hero-image' }}
             />
             {/* No overlay icon for GIF, just pure content */}
         </div>
@@ -132,7 +134,8 @@ const ArticleDetail: React.FC<ArticleDetailProps> = ({ article, onBack, onArticl
             <img 
                 src={article.imageUrl} 
                 alt={article.title} 
-                className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-700"
+                className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-slow ease-standard"
+                style={{ viewTransitionName: 'hero-image' }}
             />
             {/* No Play Icon for static images */}
         </div>
@@ -140,12 +143,13 @@ const ArticleDetail: React.FC<ArticleDetailProps> = ({ article, onBack, onArticl
   };
 
   return (
-    <div className="bg-charcoal min-h-screen relative z-50 animate-fade-in-up">
+    <div className="bg-charcoal min-h-screen relative z-50">
       {/* Navigation Bar (Floating/Sticky) */}
       <div className="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-6 md:px-12 py-6 pointer-events-none">
-        <button 
+        <button
+            type="button"
             onClick={onBack}
-            className="pointer-events-auto flex items-center space-x-2 text-cream hover:text-accent-orange transition-colors group bg-charcoal/80 backdrop-blur-md px-4 py-2 rounded-full border border-line/10 shadow-lg"
+            className="pointer-events-auto flex items-center space-x-2 text-cream hover:text-accent-orange transition-colors group bg-charcoal/80 backdrop-blur-md px-4 py-2 rounded-full border border-line/10 shadow-lg active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-orange/50 focus-visible:ring-offset-4 focus-visible:ring-offset-charcoal"
         >
             <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
             <span className="text-xs font-bold uppercase tracking-widest">Back</span>
@@ -153,13 +157,18 @@ const ArticleDetail: React.FC<ArticleDetailProps> = ({ article, onBack, onArticl
 
         <div className="flex gap-2">
             <button
+                type="button"
                 onClick={onThemeToggle}
                 aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-                className="pointer-events-auto text-cream hover:text-accent-orange transition-colors bg-charcoal/80 backdrop-blur-md p-2.5 rounded-full border border-line/10 shadow-lg"
+                className="pointer-events-auto text-cream hover:text-accent-orange transition-colors bg-charcoal/80 backdrop-blur-md p-2.5 rounded-full border border-line/10 shadow-lg active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-orange/50 focus-visible:ring-offset-4 focus-visible:ring-offset-charcoal"
             >
                 {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
             </button>
-            <button className="pointer-events-auto text-cream hover:text-cream transition-colors bg-charcoal/80 backdrop-blur-md p-2.5 rounded-full border border-line/10 shadow-lg">
+            <button
+              type="button"
+              aria-label="Share"
+              className="pointer-events-auto text-cream hover:text-cream transition-colors bg-charcoal/80 backdrop-blur-md p-2.5 rounded-full border border-line/10 shadow-lg active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-orange/50 focus-visible:ring-offset-4 focus-visible:ring-offset-charcoal"
+            >
                 <Share2 size={16} />
             </button>
         </div>
@@ -220,13 +229,16 @@ const ArticleDetail: React.FC<ArticleDetailProps> = ({ article, onBack, onArticl
       <div className="bg-surface py-24 border-t border-line/5">
          <div className="container mx-auto px-6 text-center">
             <p className="text-accent-orange/80 text-xs font-bold uppercase tracking-widest mb-6">Read Next</p>
-            <h3 
+            <h3 className="font-display text-3xl md:text-5xl font-bold text-cream mb-8 max-w-3xl mx-auto">
+              <button
+                type="button"
                 onClick={() => onArticleSelect?.(nextArticle)}
-                className="font-display text-3xl md:text-5xl font-bold text-cream mb-8 max-w-3xl mx-auto hover:text-cream/80 cursor-pointer transition-colors"
-            >
+                className="hover:text-cream/80 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-orange/50 focus-visible:ring-offset-4 focus-visible:ring-offset-surface rounded-sm active:scale-[0.99]"
+              >
                 {nextArticle.title}
+              </button>
             </h3>
-            <button onClick={onBack} className="text-cream/40 hover:text-cream transition-colors text-sm uppercase tracking-widest border-b border-transparent hover:border-line/20 pb-1">
+            <button type="button" onClick={onBack} className="text-cream/40 hover:text-cream transition-colors text-sm uppercase tracking-widest border-b border-transparent hover:border-line/20 pb-1 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-orange/50 focus-visible:ring-offset-4 focus-visible:ring-offset-surface rounded-sm px-1">
                 Back to Feed
             </button>
          </div>

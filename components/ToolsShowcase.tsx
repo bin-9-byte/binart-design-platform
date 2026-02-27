@@ -6,11 +6,12 @@ import { Layers, Palette, Type, Activity, Grid, Monitor, ArrowRight, ArrowLeft }
 
 interface ToolsShowcaseProps {
   onToolSelect?: (tool: Tool) => void;
+  transitionId: string | null;
 }
 
 const ITEMS_PER_PAGE = 9;
 
-const ToolsShowcase: React.FC<ToolsShowcaseProps> = ({ onToolSelect }) => {
+const ToolsShowcase: React.FC<ToolsShowcaseProps> = ({ onToolSelect, transitionId }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [isAnimating, setIsAnimating] = useState(false);
 
@@ -58,7 +59,7 @@ const ToolsShowcase: React.FC<ToolsShowcaseProps> = ({ onToolSelect }) => {
                  <p className="text-cream/60 leading-relaxed mb-8">
                    A selection of resources to accelerate your workflow and expand your creative capability. Updated weekly.
                  </p>
-                 <a href="#" className="text-sm font-bold uppercase tracking-widest text-accent-orange hover:text-cream transition-colors border-b border-accent-orange/30 pb-1">
+                <a href="#" className="text-sm font-bold uppercase tracking-widest text-accent-orange hover:text-cream transition-colors border-b border-accent-orange/30 pb-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-orange/50 focus-visible:ring-offset-4 focus-visible:ring-offset-charcoal rounded-sm">
                     Submit a tool
                  </a>
              </div>
@@ -70,18 +71,22 @@ const ToolsShowcase: React.FC<ToolsShowcaseProps> = ({ onToolSelect }) => {
              {/* Adjusted min-h for 3 rows of shorter cards (3 rows * ~240px + gaps) */}
              <div className="min-h-[850px] lg:min-h-[780px]">
                 <div 
-                    className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 transition-all duration-300 ease-out ${isAnimating ? 'opacity-0 scale-[0.98]' : 'opacity-100 scale-100'}`}
+                    className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 transition-[opacity,transform] duration-base ease-standard ${isAnimating ? 'opacity-0 scale-[0.98]' : 'opacity-100 scale-100'}`}
                 >
                     {currentTools.map((tool) => (
-                    <div 
+                    <button
+                        type="button"
                         key={tool.id}
                         onClick={() => onToolSelect && onToolSelect(tool)}
-                        className="group bg-muted/5 border border-line/10 p-6 hover:bg-muted/10 transition-all duration-300 relative overflow-hidden cursor-pointer flex flex-col justify-between h-full min-h-[240px]"
+                        className="group bg-muted/5 border border-line/10 p-6 hover:bg-muted/10 transition-[background-color,border-color,color,transform] duration-base ease-standard relative overflow-hidden cursor-pointer flex flex-col justify-between h-full min-h-[240px] text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-orange/50 focus-visible:ring-offset-4 focus-visible:ring-offset-charcoal rounded-sm active:scale-[0.99]"
                     >
                         <div className={`absolute top-0 right-0 w-24 h-24 ${tool.color} blur-[60px] opacity-20 group-hover:opacity-40 transition-opacity`}></div>
                         
                         <div className="relative z-10">
-                            <div className="mb-4 text-cream group-hover:text-accent-orange transition-colors">
+                            <div 
+                              className="mb-4 text-cream group-hover:text-accent-orange transition-colors"
+                              style={transitionId === tool.id ? { viewTransitionName: 'hero-image' } : undefined}
+                            >
                             {getIcon(tool.icon)}
                             </div>
                             <h3 className="font-display text-lg font-bold text-cream mb-2 group-hover:translate-x-1 transition-transform">
@@ -98,7 +103,7 @@ const ToolsShowcase: React.FC<ToolsShowcaseProps> = ({ onToolSelect }) => {
                                 <ArrowRight size={10} className="group-hover:translate-x-1 transition-transform" />
                             </div>
                         </div>
-                    </div>
+                    </button>
                     ))}
                 </div>
              </div>
@@ -113,11 +118,11 @@ const ToolsShowcase: React.FC<ToolsShowcaseProps> = ({ onToolSelect }) => {
                 </div>
 
                 {/* Arrows & Numbers */}
-                <div className={`flex items-center space-x-6 transition-opacity duration-300 ${totalPages <= 1 ? 'opacity-30 pointer-events-none' : 'opacity-100'}`}>
+                <div className={`flex items-center space-x-6 transition-opacity duration-base ease-standard ${totalPages <= 1 ? 'opacity-30 pointer-events-none' : 'opacity-100'}`}>
                     <button 
                         onClick={() => handlePageChange('prev')}
                         disabled={currentPage === 1}
-                        className={`w-10 h-10 rounded-full border border-line/10 flex items-center justify-center transition-all duration-300 ${currentPage === 1 ? 'opacity-30 cursor-not-allowed' : 'hover:border-accent-orange hover:text-accent-orange cursor-pointer'}`}
+                        className={`w-10 h-10 rounded-full border border-line/10 flex items-center justify-center transition-[border-color,color,transform] duration-fast ease-standard focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-orange/50 focus-visible:ring-offset-4 focus-visible:ring-offset-charcoal ${currentPage === 1 ? 'opacity-30 cursor-not-allowed' : 'hover:border-accent-orange hover:text-accent-orange active:scale-95 cursor-pointer'}`}
                     >
                         <ArrowLeft size={16} />
                     </button>
@@ -129,7 +134,7 @@ const ToolsShowcase: React.FC<ToolsShowcaseProps> = ({ onToolSelect }) => {
                     <button 
                         onClick={() => handlePageChange('next')}
                         disabled={currentPage === totalPages}
-                        className={`w-10 h-10 rounded-full border border-line/10 flex items-center justify-center transition-all duration-300 ${currentPage === totalPages ? 'opacity-30 cursor-not-allowed' : 'hover:border-accent-orange hover:text-accent-orange cursor-pointer'}`}
+                        className={`w-10 h-10 rounded-full border border-line/10 flex items-center justify-center transition-[border-color,color,transform] duration-fast ease-standard focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-orange/50 focus-visible:ring-offset-4 focus-visible:ring-offset-charcoal ${currentPage === totalPages ? 'opacity-30 cursor-not-allowed' : 'hover:border-accent-orange hover:text-accent-orange active:scale-95 cursor-pointer'}`}
                     >
                         <ArrowRight size={16} />
                     </button>

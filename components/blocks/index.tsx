@@ -43,7 +43,7 @@ export const QuoteBlock: React.FC<{ block: ContentBlock }> = ({ block }) => (
 export const GalleryBlock: React.FC<{ block: ContentBlock }> = ({ block }) => (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-12">
         {block.images?.map((img, i) => (
-            <img key={i} src={img} className="w-full h-64 object-cover rounded-sm grayscale hover:grayscale-0 transition-all duration-500" alt="Gallery item" />
+            <img key={i} src={img} className="w-full h-64 object-cover rounded-sm grayscale hover:grayscale-0 transition-[filter] duration-base ease-standard" alt="Gallery item" />
         ))}
     </div>
 );

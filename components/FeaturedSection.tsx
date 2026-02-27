@@ -10,9 +10,10 @@ interface FeaturedSectionProps {
   section?: string;
   featuredOnly?: boolean;
   onArticleSelect: (article: Article) => void;
+  transitionId: string | null;
 }
 
-const FeaturedSection: React.FC<FeaturedSectionProps> = ({ id, title = "Featured Stories", section, featuredOnly, onArticleSelect }) => {
+const FeaturedSection: React.FC<FeaturedSectionProps> = ({ id, title = "Featured Stories", section, featuredOnly, onArticleSelect, transitionId }) => {
   let articles = FEATURED_ARTICLES;
   if (section) {
     articles = articles.filter((article) => article.sections?.includes(section));
@@ -37,24 +38,26 @@ const FeaturedSection: React.FC<FeaturedSectionProps> = ({ id, title = "Featured
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
           {articles.map((article: Article, index) => (
-            <div 
+            <button
+              type="button"
               key={article.id}
-              className="group relative cursor-pointer w-full"
+              className="group relative cursor-pointer w-full text-left bg-transparent p-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-orange/50 focus-visible:ring-offset-4 focus-visible:ring-offset-charcoal rounded-sm active:scale-[0.99]"
               onClick={() => onArticleSelect(article)}
             >
               <div className="relative overflow-hidden aspect-[16/9] mb-6">
-                <div className="absolute inset-0 bg-muted/10 group-hover:bg-transparent transition-colors z-10 duration-500"></div>
+                <div className="absolute inset-0 bg-muted/10 group-hover:bg-transparent transition-colors duration-base ease-standard z-10"></div>
                 <img 
                   src={article.imageUrl} 
                   alt={article.title} 
-                  className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
+                  className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-slow ease-standard"
+                  style={transitionId === article.id ? { viewTransitionName: 'hero-image' } : undefined}
                 />
                 <div className="absolute top-4 right-4 bg-muted/5 backdrop-blur-md px-3 py-1 rounded-full border border-line/10 z-20">
                    <span className="text-xs uppercase tracking-widest text-cream">{article.category}</span>
                 </div>
               </div>
 
-              <div className="flex justify-between items-start border-b border-line/10 pb-6 group-hover:border-accent-orange/50 transition-colors duration-500 relative z-10">
+              <div className="flex justify-between items-start border-b border-line/10 pb-6 group-hover:border-accent-orange/50 transition-colors duration-base ease-standard relative z-10">
                 <div className="pr-4">
                    <div className="flex items-center space-x-4 mb-3 text-xs font-mono text-cream/60">
                       <span>{article.date}</span>
@@ -68,7 +71,7 @@ const FeaturedSection: React.FC<FeaturedSectionProps> = ({ id, title = "Featured
                      {article.excerpt}
                    </p>
                 </div>
-                <div className="mt-1 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 shrink-0">
+                <div className="mt-1 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-[opacity,transform] duration-base ease-standard shrink-0">
                    <div className="w-10 h-10 rounded-full bg-accent-orange flex items-center justify-center text-white">
                       <ArrowUpRight size={20} />
                    </div>
@@ -79,7 +82,7 @@ const FeaturedSection: React.FC<FeaturedSectionProps> = ({ id, title = "Featured
               <span className="absolute -top-12 -left-2 text-[6rem] font-display font-bold text-muted/5 pointer-events-none group-hover:text-muted/10 transition-colors z-0">
                 0{index + 1}
               </span>
-            </div>
+            </button>
           ))}
         </div>
       </div>

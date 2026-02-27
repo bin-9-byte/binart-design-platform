@@ -13,7 +13,7 @@ interface ToolDetailProps {
 const ToolDetail: React.FC<ToolDetailProps> = ({ tool, onBack, theme, onThemeToggle }) => {
   // Scroll to top on mount immediately
   useLayoutEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'instant' });
+    window.scrollTo({ top: 0, behavior: 'auto' });
   }, [tool.id]);
 
   const getIcon = (iconName: string, size = 64) => {
@@ -59,28 +59,34 @@ const ToolDetail: React.FC<ToolDetailProps> = ({ tool, onBack, theme, onThemeTog
   );
 
   return (
-    <div className="bg-charcoal min-h-screen relative z-50 animate-fade-in-up">
+    <div className="bg-charcoal min-h-screen relative z-50">
       {/* Background Ambience */}
       <div className={`fixed top-0 left-0 w-full h-[60vh] ${tool.color} blur-[150px] opacity-10 pointer-events-none z-0`}></div>
 
       {/* Nav Bar */}
       <div className="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-6 md:px-12 py-6 pointer-events-none">
-        <button 
+        <button
+            type="button"
             onClick={onBack}
-            className="pointer-events-auto flex items-center space-x-2 text-cream hover:text-accent-orange transition-colors group bg-charcoal/80 backdrop-blur-md px-4 py-2 rounded-full border border-line/10 shadow-lg"
+            className="pointer-events-auto flex items-center space-x-2 text-cream hover:text-accent-orange transition-colors group bg-charcoal/80 backdrop-blur-md px-4 py-2 rounded-full border border-line/10 shadow-lg active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-orange/50 focus-visible:ring-offset-4 focus-visible:ring-offset-charcoal"
         >
             <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
             <span className="text-xs font-bold uppercase tracking-widest">Back</span>
         </button>
         <div className="flex gap-2">
           <button
+            type="button"
             onClick={onThemeToggle}
             aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-            className="pointer-events-auto text-cream hover:text-accent-orange transition-colors bg-charcoal/80 backdrop-blur-md p-2.5 rounded-full border border-line/10 shadow-lg"
+            className="pointer-events-auto text-cream hover:text-accent-orange transition-colors bg-charcoal/80 backdrop-blur-md p-2.5 rounded-full border border-line/10 shadow-lg active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-orange/50 focus-visible:ring-offset-4 focus-visible:ring-offset-charcoal"
           >
             {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
           </button>
-          <button className="pointer-events-auto text-cream hover:text-cream transition-colors bg-charcoal/80 backdrop-blur-md p-2.5 rounded-full border border-line/10 shadow-lg">
+          <button
+              type="button"
+              aria-label="Share"
+              className="pointer-events-auto text-cream hover:text-cream transition-colors bg-charcoal/80 backdrop-blur-md p-2.5 rounded-full border border-line/10 shadow-lg active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-orange/50 focus-visible:ring-offset-4 focus-visible:ring-offset-charcoal"
+          >
               <Share2 size={16} />
           </button>
         </div>
@@ -91,9 +97,12 @@ const ToolDetail: React.FC<ToolDetailProps> = ({ tool, onBack, theme, onThemeTog
         {/* 1. Simplified Header Section */}
         <div className="flex flex-col items-center text-center mb-24">
            {/* Icon */}
-           <div className={`w-24 h-24 md:w-32 md:h-32 ${tool.color} rounded-[2rem] flex items-center justify-center shadow-2xl border border-line/10 mb-8 relative group`}>
-               <div className="absolute inset-0 bg-gradient-to-tr from-black/20 to-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-[2rem]"></div>
-               <div className="relative z-10 transform group-hover:scale-110 transition-transform duration-500">
+           <div 
+             className={`w-24 h-24 md:w-32 md:h-32 ${tool.color} rounded-[2rem] flex items-center justify-center shadow-2xl border border-line/10 mb-8 relative group`}
+             style={{ viewTransitionName: 'hero-image' }}
+           >
+               <div className="absolute inset-0 bg-gradient-to-tr from-black/20 to-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-base ease-standard rounded-[2rem]"></div>
+               <div className="relative z-10 transform group-hover:scale-110 transition-transform duration-base ease-standard">
                   {getIcon(tool.icon, 64)}
                </div>
            </div>
@@ -110,7 +119,7 @@ const ToolDetail: React.FC<ToolDetailProps> = ({ tool, onBack, theme, onThemeTog
 
            {/* Action Buttons & Meta */}
            <div className="flex flex-col md:flex-row items-center gap-6">
-               <button className="bg-accent-orange hover:bg-accent-blue text-white font-display font-bold text-sm md:text-base px-10 py-4 rounded-full transition-all duration-300 shadow-lg shadow-blue-900/20 transform hover:-translate-y-1">
+               <button type="button" className="bg-accent-orange hover:bg-accent-blue text-white font-display font-bold text-sm md:text-base px-10 py-4 rounded-full transition-[background-color,transform] duration-base ease-standard shadow-lg shadow-blue-900/20 transform hover:-translate-y-1 active:translate-y-0 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-orange/50 focus-visible:ring-offset-4 focus-visible:ring-offset-charcoal">
                    Get {tool.name}
                </button>
                
@@ -193,7 +202,7 @@ const ToolDetail: React.FC<ToolDetailProps> = ({ tool, onBack, theme, onThemeTog
                              <span className="text-cream font-mono">{tool.pricing}</span>
                          </div>
                          
-                         <button className="w-full mt-4 flex items-center justify-center gap-2 text-cream/60 hover:text-cream transition-colors text-xs uppercase tracking-widest font-bold pt-2">
+                         <button type="button" className="w-full mt-4 flex items-center justify-center gap-2 text-cream/60 hover:text-cream transition-colors text-xs uppercase tracking-widest font-bold pt-2 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-orange/50 focus-visible:ring-offset-4 focus-visible:ring-offset-surface rounded-sm">
                              <span>Visit Website</span>
                              <ExternalLink size={12} />
                          </button>
@@ -208,10 +217,10 @@ const ToolDetail: React.FC<ToolDetailProps> = ({ tool, onBack, theme, onThemeTog
       <div className="bg-surface py-24 border-t border-line/5 relative z-10">
          <div className="container mx-auto px-6 text-center">
             <p className="text-accent-orange/80 text-xs font-bold uppercase tracking-widest mb-6">Explore</p>
-            <h3 className="font-display text-3xl md:text-5xl font-bold text-cream mb-8 max-w-3xl mx-auto hover:text-cream/80 cursor-pointer transition-colors">
+            <h3 className="font-display text-3xl md:text-5xl font-bold text-cream mb-8 max-w-3xl mx-auto transition-colors">
                 Texture Lab
             </h3>
-            <button onClick={onBack} className="text-cream/40 hover:text-cream transition-colors text-sm uppercase tracking-widest border-b border-transparent hover:border-line/20 pb-1">
+            <button type="button" onClick={onBack} className="text-cream/40 hover:text-cream transition-colors text-sm uppercase tracking-widest border-b border-transparent hover:border-line/20 pb-1 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-orange/50 focus-visible:ring-offset-4 focus-visible:ring-offset-surface rounded-sm px-1">
                 Back to Feed
             </button>
          </div>

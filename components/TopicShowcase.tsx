@@ -6,11 +6,12 @@ import { ArrowRight, ArrowLeft } from 'lucide-react';
 
 interface TopicShowcaseProps {
   onArticleSelect: (article: Article) => void;
+  transitionId: string | null;
 }
 
 const ITEMS_PER_PAGE = 6;
 
-const TopicShowcase: React.FC<TopicShowcaseProps> = ({ onArticleSelect }) => {
+const TopicShowcase: React.FC<TopicShowcaseProps> = ({ onArticleSelect, transitionId }) => {
   const [activeCategory, setActiveCategory] = useState<Category>(Category.ALL);
   const [currentPage, setCurrentPage] = useState(1);
   const [isAnimating, setIsAnimating] = useState(false);
@@ -64,7 +65,7 @@ const TopicShowcase: React.FC<TopicShowcaseProps> = ({ onArticleSelect }) => {
                 <button
                     key={cat}
                     onClick={() => setActiveCategory(cat)}
-                    className={`px-4 py-1.5 rounded-full border transition-all duration-300 text-xs tracking-wide uppercase ${
+                    className={`px-4 py-1.5 rounded-full border transition-[background-color,border-color,color,transform] duration-fast ease-standard text-xs tracking-wide uppercase focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-orange/50 focus-visible:ring-offset-4 focus-visible:ring-offset-charcoal active:scale-[0.98] ${
                     activeCategory === cat 
                         ? 'bg-accent-orange text-white border-accent-orange font-bold' 
                         : 'bg-transparent text-cream/60 border-line/20 hover:border-line/50 hover:text-cream'
@@ -80,12 +81,13 @@ const TopicShowcase: React.FC<TopicShowcaseProps> = ({ onArticleSelect }) => {
         {/* Adjusted min-height to 720px for a tighter layout while maintaining stability */}
         <div className="min-h-[720px]">
             <div 
-                className={`grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10 relative z-10 transition-all duration-300 ease-out ${isAnimating ? 'opacity-0 scale-[0.98]' : 'opacity-100 scale-100'}`}
+                className={`grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10 relative z-10 transition-[opacity,transform] duration-base ease-standard ${isAnimating ? 'opacity-0 scale-[0.98]' : 'opacity-100 scale-100'}`}
             >
             {visibleArticles.map((item, index) => (
-                <div 
+                <button
+                type="button"
                 key={item.id} 
-                className="group flex h-full items-start justify-between cursor-pointer border-b border-line/10 pb-8 hover:border-accent-orange/50 transition-colors duration-500"
+                className="group flex w-full h-full items-start justify-between cursor-pointer border-b border-line/10 pb-8 hover:border-accent-orange/50 transition-colors duration-base ease-standard text-left bg-transparent p-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-orange/50 focus-visible:ring-offset-4 focus-visible:ring-offset-charcoal rounded-sm active:scale-[0.99]"
                 onClick={() => onArticleSelect(item)}
                 >
                 {/* Text Content - Left */}
@@ -104,7 +106,7 @@ const TopicShowcase: React.FC<TopicShowcaseProps> = ({ onArticleSelect }) => {
                         </p>
                     </div>
                     
-                    <div className="flex items-center text-accent-orange text-xs font-bold uppercase tracking-widest opacity-0 transform translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 ease-[cubic-bezier(0.25,0.1,0.25,1.0)] group-hover:duration-700">
+                    <div className="flex items-center text-accent-orange text-xs font-bold uppercase tracking-widest opacity-0 transform translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-[opacity,transform] duration-base ease-standard">
                         <span>Read Story</span>
                         <ArrowRight size={14} className="ml-2" />
                     </div>
@@ -113,19 +115,20 @@ const TopicShowcase: React.FC<TopicShowcaseProps> = ({ onArticleSelect }) => {
                 {/* Image Content - Right (Redesigned Hover) */}
                 <div className="w-32 h-32 md:w-40 md:h-40 shrink-0 relative">
                     {/* Decorative Background Offset Layer */}
-                    <div className="absolute inset-0 bg-accent-orange z-0 opacity-0 group-hover:opacity-100 group-hover:translate-x-2 group-hover:translate-y-2 transition-all duration-500 ease-out rounded-sm"></div>
+                    <div className="absolute inset-0 bg-accent-orange z-0 opacity-0 group-hover:opacity-100 group-hover:translate-x-2 group-hover:translate-y-2 transition-[opacity,transform] duration-slow ease-standard rounded-sm"></div>
                     
                     {/* Main Image Container */}
-                    <div className="relative w-full h-full overflow-hidden bg-charcoal border border-line/10 group-hover:border-transparent rounded-sm transition-colors duration-500 z-10">
-                        <div className="absolute inset-0 bg-muted/10 group-hover:bg-transparent transition-colors duration-500 z-10"></div>
+                    <div className="relative w-full h-full overflow-hidden bg-charcoal border border-line/10 group-hover:border-transparent rounded-sm transition-colors duration-base ease-standard z-10">
+                        <div className="absolute inset-0 bg-muted/10 group-hover:bg-transparent transition-colors duration-base ease-standard z-10"></div>
                         <img 
                             src={item.imageUrl} 
                             alt={item.title} 
-                            className="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transform scale-100 group-hover:scale-110 transition-all duration-700 ease-out"
+                            className="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transform scale-100 group-hover:scale-110 transition-[filter,transform] duration-slow ease-standard"
+                            style={transitionId === item.id ? { viewTransitionName: 'hero-image' } : undefined}
                         />
                     </div>
                 </div>
-                </div>
+                </button>
             ))}
             </div>
             
@@ -147,11 +150,11 @@ const TopicShowcase: React.FC<TopicShowcaseProps> = ({ onArticleSelect }) => {
             </div>
 
             {/* Arrows & Numbers */}
-            <div className={`flex items-center space-x-6 transition-opacity duration-300 ${totalPages <= 1 ? 'opacity-30 pointer-events-none' : 'opacity-100'}`}>
+            <div className={`flex items-center space-x-6 transition-opacity duration-base ease-standard ${totalPages <= 1 ? 'opacity-30 pointer-events-none' : 'opacity-100'}`}>
                 <button 
                     onClick={() => handlePageChange('prev')}
                     disabled={currentPage === 1}
-                    className={`w-10 h-10 rounded-full border border-line/10 flex items-center justify-center transition-all duration-300 ${currentPage === 1 ? 'opacity-30 cursor-not-allowed' : 'hover:border-accent-orange hover:text-accent-orange cursor-pointer'}`}
+                    className={`w-10 h-10 rounded-full border border-line/10 flex items-center justify-center transition-[border-color,color,transform] duration-fast ease-standard focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-orange/50 focus-visible:ring-offset-4 focus-visible:ring-offset-charcoal ${currentPage === 1 ? 'opacity-30 cursor-not-allowed' : 'hover:border-accent-orange hover:text-accent-orange active:scale-95 cursor-pointer'}`}
                 >
                     <ArrowLeft size={16} />
                 </button>
@@ -163,7 +166,7 @@ const TopicShowcase: React.FC<TopicShowcaseProps> = ({ onArticleSelect }) => {
                 <button 
                     onClick={() => handlePageChange('next')}
                     disabled={currentPage === totalPages}
-                    className={`w-10 h-10 rounded-full border border-line/10 flex items-center justify-center transition-all duration-300 ${currentPage === totalPages ? 'opacity-30 cursor-not-allowed' : 'hover:border-accent-orange hover:text-accent-orange cursor-pointer'}`}
+                    className={`w-10 h-10 rounded-full border border-line/10 flex items-center justify-center transition-[border-color,color,transform] duration-fast ease-standard focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-orange/50 focus-visible:ring-offset-4 focus-visible:ring-offset-charcoal ${currentPage === totalPages ? 'opacity-30 cursor-not-allowed' : 'hover:border-accent-orange hover:text-accent-orange active:scale-95 cursor-pointer'}`}
                 >
                     <ArrowRight size={16} />
                 </button>

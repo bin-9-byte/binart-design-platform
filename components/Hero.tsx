@@ -40,7 +40,7 @@ const Hero: React.FC = () => {
                  {/* Video Element */}
                  <video 
                     ref={videoRef}
-                    className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-700"
+                    className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-slow ease-standard"
                     src="/videos/hero/hero.mp4" 
                     autoPlay
                     muted
@@ -55,7 +55,7 @@ const Hero: React.FC = () => {
                  <div className="absolute bottom-6 right-6 z-20">
                      <button 
                         onClick={toggleVideo}
-                        className="w-10 h-10 md:w-12 md:h-12 bg-surface text-cream border border-line/10 rounded-full flex items-center justify-center cursor-pointer hover:scale-105 transition-transform shadow-lg group-hover:bg-accent-orange group-hover:text-white group-hover:border-accent-orange"
+                        className="w-10 h-10 md:w-12 md:h-12 bg-surface text-cream border border-line/10 rounded-full flex items-center justify-center cursor-pointer hover:scale-105 active:scale-95 transition-[background-color,border-color,color,transform] duration-fast ease-standard shadow-lg group-hover:bg-accent-orange group-hover:text-white group-hover:border-accent-orange focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-orange/50 focus-visible:ring-offset-4 focus-visible:ring-offset-charcoal"
                      >
                          {isPlaying ? (
                              <Pause className="w-4 h-4 md:w-5 md:h-5 transition-colors duration-300" fill="currentColor" />

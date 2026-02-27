@@ -1,7 +1,11 @@
 
 import React from 'react';
 
-const Footer: React.FC = () => {
+interface FooterProps {
+  onSubscribeClick?: () => void;
+}
+
+const Footer: React.FC<FooterProps> = ({ onSubscribeClick }) => {
   return (
     <footer className="bg-charcoal pt-32 pb-12 border-t border-line/10">
       <div className="container mx-auto px-6 md:px-12">
@@ -11,16 +15,25 @@ const Footer: React.FC = () => {
               Let's build the<br />
               <span className="text-accent-orange">unimaginable.</span>
             </h2>
-            <div className="flex space-x-6">
+            <form
+              className="flex space-x-6"
+              onSubmit={(e) => {
+                e.preventDefault();
+                onSubscribeClick?.();
+              }}
+            >
                 <input 
                     type="email" 
                     placeholder="Enter your email" 
-                    className="bg-transparent border-b border-line/30 py-3 text-lg text-cream placeholder-cream/40 focus:outline-none focus:border-accent-orange w-full max-w-sm transition-colors"
+                    className="bg-transparent border-b border-line/30 py-3 text-lg text-cream placeholder-cream/40 focus:outline-none focus:border-accent-orange w-full max-w-sm transition-colors focus-visible:ring-2 focus-visible:ring-accent-orange/50 focus-visible:ring-offset-4 focus-visible:ring-offset-charcoal rounded-sm"
                 />
-                <button className="text-cream font-bold hover:text-accent-orange transition-colors">
+                <button
+                  type="submit"
+                  className="text-cream font-bold hover:text-accent-orange transition-colors active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-orange/50 focus-visible:ring-offset-4 focus-visible:ring-offset-charcoal rounded-sm px-1"
+                >
                     SUBSCRIBE
                 </button>
-            </div>
+            </form>
           </div>
           
           <div className="grid grid-cols-2 md:grid-cols-3 gap-8 text-cream/60">
