@@ -18,9 +18,10 @@ import {
 interface ArticleDetailProps {
   article: Article;
   onBack: () => void;
-  onArticleSelect?: (article: Article) => void;
+  onArticleSelect?: (article: Article, sourceId?: string) => void;
   theme: 'light' | 'dark';
   onThemeToggle: () => void;
+  transitionId: string | null;
 }
 
 const BlockComponents: Record<string, React.FC<{ block: ContentBlock }>> = {
@@ -35,7 +36,7 @@ const BlockComponents: Record<string, React.FC<{ block: ContentBlock }>> = {
   video: VideoBlock
 };
 
-const ArticleDetail: React.FC<ArticleDetailProps> = ({ article, onBack, onArticleSelect, theme, onThemeToggle }) => {
+const ArticleDetail: React.FC<ArticleDetailProps> = ({ article, onBack, onArticleSelect, theme, onThemeToggle, transitionId }) => {
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -88,54 +89,50 @@ const ArticleDetail: React.FC<ArticleDetailProps> = ({ article, onBack, onArticl
     if (article.mediaType === 'video') {
       return (
         <div className="w-full h-full relative group cursor-pointer" onClick={toggleVideo}>
-            <video 
-                ref={videoRef}
-                src={article.videoUrl}
-                poster={article.imageUrl}
-                className="w-full h-full object-cover"
-                style={{ viewTransitionName: 'hero-image' }}
-                muted
-                playsInline
-                loop
-                onClick={(e) => { e.preventDefault(); /* Click handled by container to toggle */ }}
-            />
-            <div className="absolute inset-0 bg-muted/10 group-hover:bg-transparent transition-colors duration-base ease-standard pointer-events-none"></div>
+            <div className="relative z-10 w-full h-full flex items-center justify-center">
+                <div className="relative inline-flex h-full max-w-full">
+                    <video 
+                        ref={videoRef}
+                        src={article.videoUrl}
+                        poster={article.imageUrl}
+                        className="h-full w-auto max-w-full object-contain"
+                        muted
+                        playsInline
+                        loop
+                        onClick={(e) => { e.preventDefault(); }}
+                    />
+                    <div className="absolute inset-0 bg-muted/10 group-hover:bg-transparent transition-colors duration-base ease-standard pointer-events-none"></div>
+                </div>
+            </div>
             
-            {/* Functional Play/Pause Control */}
-            <div className="absolute bottom-6 right-6 w-12 h-12 bg-charcoal/90 backdrop-blur rounded-full flex items-center justify-center border border-line/10 group-hover:scale-110 transition-transform duration-base ease-standard z-20 shadow-lg">
-                {isVideoPlaying ? (
-                    <Pause size={16} fill="currentColor" className="text-cream" />
-                ) : (
-                    <Play size={16} fill="currentColor" className="text-cream ml-1" />
-                )}
+            {/* Play/Pause Button Overlay */}
+            <div className={`absolute bottom-6 right-6 w-12 h-12 rounded-full bg-surface/80 backdrop-blur-md flex items-center justify-center text-cream border border-line/10 transition-all duration-base ease-standard z-20 ${isVideoPlaying ? 'opacity-0 group-hover:opacity-100' : 'opacity-100'}`}>
+                {isVideoPlaying ? <Pause size={20} fill="currentColor" /> : <Play size={20} fill="currentColor" className="ml-0.5" />}
             </div>
         </div>
       );
     }
-
+    
     if (article.mediaType === 'gif') {
       return (
-        <div className="w-full h-full relative">
+        <div className="w-full h-full relative flex items-center justify-center">
             {/* Prioritize gifUrl for animation, fallback to imageUrl if missing */}
             <img 
                 src={article.gifUrl || article.imageUrl} 
                 alt={article.title} 
-                className="w-full h-full object-cover"
-                style={{ viewTransitionName: 'hero-image' }}
+                className="h-full w-auto max-w-full object-contain"
             />
             {/* No overlay icon for GIF, just pure content */}
         </div>
       );
     }
 
-    // Default: Image
     return (
-        <div className="w-full h-full relative group">
+        <div className="w-full h-full relative group flex items-center justify-center">
             <img 
                 src={article.imageUrl} 
                 alt={article.title} 
-                className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-slow ease-standard"
-                style={{ viewTransitionName: 'hero-image' }}
+                className="h-full w-auto max-w-full object-contain"
             />
             {/* No Play Icon for static images */}
         </div>
@@ -143,40 +140,39 @@ const ArticleDetail: React.FC<ArticleDetailProps> = ({ article, onBack, onArticl
   };
 
   return (
-    <div className="bg-charcoal min-h-screen relative z-50">
-      {/* Navigation Bar (Floating/Sticky) */}
-      <div className="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-6 md:px-12 py-6 pointer-events-none">
-        <button
-            type="button"
-            onClick={onBack}
-            className="pointer-events-auto flex items-center space-x-2 text-cream hover:text-accent-orange transition-colors group bg-charcoal/80 backdrop-blur-md px-4 py-2 rounded-full border border-line/10 shadow-lg active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-orange/50 focus-visible:ring-offset-4 focus-visible:ring-offset-charcoal"
-        >
-            <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
-            <span className="text-xs font-bold uppercase tracking-widest">Back</span>
-        </button>
-
-        <div className="flex gap-2">
-            <button
-                type="button"
-                onClick={onThemeToggle}
-                aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-                className="pointer-events-auto text-cream hover:text-accent-orange transition-colors bg-charcoal/80 backdrop-blur-md p-2.5 rounded-full border border-line/10 shadow-lg active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-orange/50 focus-visible:ring-offset-4 focus-visible:ring-offset-charcoal"
+    <article className="min-h-screen bg-charcoal text-cream selection:bg-accent-orange selection:text-white pb-32">
+      {/* Navigation - Top Bar (Floating) */}
+      <nav className="fixed top-0 left-0 right-0 z-50 px-6 py-6 md:px-12 pointer-events-none">
+        <div className="flex justify-between items-center max-w-[1920px] mx-auto pointer-events-auto">
+            <button 
+                onClick={onBack}
+                className="group flex items-center space-x-2 text-sm font-bold uppercase tracking-widest text-cream/60 hover:text-accent-orange transition-colors backdrop-blur-md bg-charcoal/50 px-4 py-2 rounded-full border border-line/10 hover:border-accent-orange/30"
             >
-                {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
+                <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform duration-fast ease-standard" />
+                <span>Back</span>
             </button>
-            <button
-              type="button"
-              aria-label="Share"
-              className="pointer-events-auto text-cream hover:text-cream transition-colors bg-charcoal/80 backdrop-blur-md p-2.5 rounded-full border border-line/10 shadow-lg active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-orange/50 focus-visible:ring-offset-4 focus-visible:ring-offset-charcoal"
-            >
-                <Share2 size={16} />
-            </button>
+            
+            <div className="flex items-center space-x-3">
+               <button 
+                  onClick={onThemeToggle}
+                  className="w-10 h-10 rounded-full flex items-center justify-center text-cream/60 hover:text-cream hover:bg-white/5 transition-all backdrop-blur-md bg-charcoal/50 border border-line/10"
+                  aria-label="Toggle theme"
+               >
+                  {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+               </button>
+               <button className="w-10 h-10 rounded-full flex items-center justify-center text-cream/60 hover:text-cream hover:bg-white/5 transition-all backdrop-blur-md bg-charcoal/50 border border-line/10">
+                  <Share2 size={18} />
+               </button>
+            </div>
         </div>
-      </div>
+      </nav>
 
       <div className="container mx-auto px-4 md:px-8 lg:px-12 pt-32">
         {/* 1. Hero Image/Video Section */}
-        <div className="w-full aspect-video md:aspect-[21/10] overflow-hidden rounded-sm relative mb-16 bg-surface border border-line/5">
+        <div 
+          className="w-full h-[320px] md:h-[420px] lg:h-[520px] overflow-hidden rounded-sm relative mb-16 bg-transparent flex items-center justify-center"
+          style={transitionId ? { viewTransitionName: 'hero-image' } : undefined}
+        >
             {renderHeroMedia()}
         </div>
 
@@ -243,7 +239,7 @@ const ArticleDetail: React.FC<ArticleDetailProps> = ({ article, onBack, onArticl
             </button>
          </div>
       </div>
-    </div>
+    </article>
   );
 };
 

@@ -5,7 +5,7 @@ import { TOPIC_DATA } from '../constants';
 import { ArrowRight, ArrowLeft } from 'lucide-react';
 
 interface TopicShowcaseProps {
-  onArticleSelect: (article: Article) => void;
+  onArticleSelect: (article: Article, sourceId?: string) => void;
   transitionId: string | null;
 }
 
@@ -83,12 +83,14 @@ const TopicShowcase: React.FC<TopicShowcaseProps> = ({ onArticleSelect, transiti
             <div 
                 className={`grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10 relative z-10 transition-[opacity,transform] duration-base ease-standard ${isAnimating ? 'opacity-0 scale-[0.98]' : 'opacity-100 scale-100'}`}
             >
-            {visibleArticles.map((item, index) => (
+            {visibleArticles.map((item, index) => {
+              const uniqueKey = `archive-${item.id}`;
+              return (
                 <button
                 type="button"
-                key={item.id} 
+                key={uniqueKey} 
                 className="group flex w-full h-full items-start justify-between cursor-pointer border-b border-line/10 pb-8 hover:border-accent-orange/50 transition-colors duration-base ease-standard text-left bg-transparent p-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-orange/50 focus-visible:ring-offset-4 focus-visible:ring-offset-charcoal rounded-sm active:scale-[0.99]"
-                onClick={() => onArticleSelect(item)}
+                onClick={() => onArticleSelect(item, uniqueKey)}
                 >
                 {/* Text Content - Left */}
                 <div className="flex-1 pr-6 flex flex-col h-full justify-between">
@@ -118,18 +120,25 @@ const TopicShowcase: React.FC<TopicShowcaseProps> = ({ onArticleSelect, transiti
                     <div className="absolute inset-0 bg-accent-orange z-0 opacity-0 group-hover:opacity-100 group-hover:translate-x-2 group-hover:translate-y-2 transition-[opacity,transform] duration-slow ease-standard rounded-sm"></div>
                     
                     {/* Main Image Container */}
-                    <div className="relative w-full h-full overflow-hidden bg-charcoal border border-line/10 group-hover:border-transparent rounded-sm transition-colors duration-base ease-standard z-10">
+                    <div 
+                        className="relative w-full h-full overflow-hidden bg-charcoal border border-line/10 group-hover:border-transparent rounded-sm transition-colors duration-base ease-standard z-10"
+                        style={transitionId === uniqueKey ? { viewTransitionName: 'hero-image' } : undefined}
+                    >
                         <div className="absolute inset-0 bg-muted/10 group-hover:bg-transparent transition-colors duration-base ease-standard z-10"></div>
                         <img 
                             src={item.imageUrl} 
                             alt={item.title} 
-                            className="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transform scale-100 group-hover:scale-110 transition-[filter,transform] duration-slow ease-standard"
-                            style={transitionId === item.id ? { viewTransitionName: 'hero-image' } : undefined}
+                            className={`w-full h-full object-cover transition-[filter,transform] duration-slow ease-standard ${
+                                transitionId === uniqueKey 
+                                    ? 'filter-none grayscale-0 scale-100' 
+                                    : 'filter grayscale group-hover:grayscale-0 transform scale-100 group-hover:scale-110'
+                            }`}
                         />
                     </div>
                 </div>
                 </button>
-            ))}
+            );
+            })}
             </div>
             
             {/* Empty State */}

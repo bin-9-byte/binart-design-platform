@@ -120,54 +120,73 @@
         transition: clip-path 0.5s ease-in-out;
       }
 
-      /* View Transitions API (Google/Material 3 Shared Axis Style) */
-      @media (prefers-reduced-motion: no-preference) {
+      /* View Transitions API (Google/Material 3 Shared Axis Style - Tuned for Snappiness) */
         ::view-transition-group(root) {
-          animation-duration: 500ms;
-          animation-timing-function: cubic-bezier(0.2, 0, 0, 1); /* Standard-easing */
+          animation-duration: 400ms; /* Reduced from 500ms for snappier feel */
+          animation-timing-function: cubic-bezier(0.2, 0, 0, 1); /* Standard-easing (Material 3) */
         }
         
-        /* Ensure shared images (hero-*) use the same duration but no root animations */
-        /* Note: Browser defaults for shared elements (mix-blend-mode: plus-lighter) are usually good for images */
-        /* We just need to make sure they match the page transition duration */
-        html::view-transition-group(*) {
-           animation-duration: 500ms;
+        /* Ensure shared images (hero-*) match the new duration and disable cross-fade for clarity */
+        html::view-transition-group(hero-image) {
+           animation-duration: 400ms;
            animation-timing-function: cubic-bezier(0.2, 0, 0, 1);
+           z-index: 100; /* Ensure hero image stays on top */
+        }
+        
+        /* Disable old snapshot - rely purely on new snapshot transforming */
+        html::view-transition-old(hero-image) {
+          display: none;
+        }
+        
+        /* New snapshot is fully opaque from start, handling the transform */
+        html::view-transition-new(hero-image) {
+          animation: none;
+          mix-blend-mode: normal;
+          height: 100%;
+          width: 100%;
+          object-fit: cover;
+          /* Important: prevents image from spilling out of the group during aspect ratio change */
+          overflow: hidden; 
         }
 
-        /* Forward: Feed -> Detail */
+        /* Forward: Feed -> Detail (Google Shared Axis Z-Forward) */
         :root[data-transition="forward"]::view-transition-old(root) {
-          animation: 300ms cubic-bezier(0.4, 0, 1, 1) both fade-out,
-                     500ms cubic-bezier(0.2, 0, 0, 1) both scale-down;
+          /* Old (Feed) fades out and scales down slightly */
+          animation: 90ms cubic-bezier(0.4, 0, 1, 1) both fade-out,
+                     300ms cubic-bezier(0.4, 0, 0.2, 1) both scale-down;
+          z-index: 0;
         }
         :root[data-transition="forward"]::view-transition-new(root) {
-          animation: 300ms cubic-bezier(0, 0, 0.2, 1) 90ms both fade-in,
-                     500ms cubic-bezier(0.2, 0, 0, 1) both slide-up;
+          /* New (Detail) fades in and scales up from slightly larger (or slides up) */
+          /* Google Design typically uses a subtle rise + fade for content */
+          animation: 210ms cubic-bezier(0, 0, 0.2, 1) 90ms both fade-in,
+                     300ms cubic-bezier(0.4, 0, 0.2, 1) both slide-up;
           mix-blend-mode: normal;
+          z-index: 10;
         }
 
-        /* Back: Detail -> Feed */
+        /* Back: Detail -> Feed (Subtle Fade + Scale) */
         :root[data-transition="back"]::view-transition-old(root) {
-          animation: 300ms cubic-bezier(0.4, 0, 1, 1) both fade-out,
-                     500ms cubic-bezier(0.2, 0, 0, 1) both slide-down;
+          animation: 220ms cubic-bezier(0.4, 0, 1, 1) both fade-out;
           z-index: 10;
         }
         :root[data-transition="back"]::view-transition-new(root) {
-          animation: 300ms cubic-bezier(0, 0, 0.2, 1) 90ms both fade-in,
-                     500ms cubic-bezier(0.2, 0, 0, 1) both scale-up;
+          animation: 520ms cubic-bezier(0.16, 1, 0.3, 1) 160ms both fade-in-soft;
           mix-blend-mode: normal;
+          z-index: 0;
         }
-      }
+      
 
       /* Base keyframes */
       @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
       @keyframes fade-out { from { opacity: 1; } to { opacity: 0; } }
+      @keyframes fade-in-soft { from { opacity: 0; filter: blur(6px); } to { opacity: 1; filter: blur(0); } }
       
-      @keyframes scale-down { from { transform: scale(1); } to { transform: scale(0.92); } }
-      @keyframes scale-up { from { transform: scale(0.92); } to { transform: scale(1); } }
+      @keyframes scale-down { from { transform: scale(1); filter: brightness(1); } to { transform: scale(0.96); filter: brightness(0.95); } }
+      @keyframes scale-up { from { transform: scale(0.96); filter: brightness(0.95); } to { transform: scale(1); filter: brightness(1); } }
       
-      @keyframes slide-up { from { transform: translateY(8%); } to { transform: translateY(0); } }
-      @keyframes slide-down { from { transform: translateY(0); } to { transform: translateY(8%); } }
+      @keyframes slide-up { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+      @keyframes slide-down { from { transform: translateY(0); opacity: 1; } to { transform: translateY(30px); opacity: 0; } }
 
       @media (prefers-reduced-motion: reduce) {
         *, *::before, *::after {

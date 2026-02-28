@@ -10,15 +10,15 @@ import Footer from './components/Footer';
 import ArticleDetail from './components/ArticleDetail';
 import ToolDetail from './components/ToolDetail';
 import SubscribeOverlay from './components/SubscribeOverlay';
-import SearchOverlay from './components/SearchOverlay';
 import { Article, Tool } from './types';
 
 const App: React.FC = () => {
   const [activeArticle, setActiveArticle] = useState<Article | null>(null);
   const [activeTool, setActiveTool] = useState<Tool | null>(null);
   const [isSubscribeOpen, setIsSubscribeOpen] = useState(false);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [transitionId, setTransitionId] = useState<string | null>(null);
+  // Store the sourceId (uniqueKey) of the last clicked item to restore the transition on back
+  const lastSourceIdRef = useRef<string | null>(null);
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
     try {
       const stored = localStorage.getItem('theme');
@@ -45,7 +45,7 @@ const App: React.FC = () => {
     } catch {}
   }, [theme]);
 
-  const isOverlayOpen = isSubscribeOpen || isSearchOpen;
+  const isOverlayOpen = isSubscribeOpen;
 
   useEffect(() => {
     const el = backgroundRef.current as any;
@@ -53,37 +53,26 @@ const App: React.FC = () => {
     el.inert = isOverlayOpen;
   }, [isOverlayOpen]);
 
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (!(e.ctrlKey || e.metaKey)) return;
-      if (e.key.toLowerCase() !== 'k') return;
-      const target = e.target as HTMLElement | null;
-      const tag = target?.tagName;
-      if (tag === 'INPUT' || tag === 'TEXTAREA' || target?.isContentEditable) return;
-      e.preventDefault();
-      setIsSubscribeOpen(false);
-      setIsSearchOpen(true);
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
-
   const toggleTheme = () => {
     setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
   };
 
-  const handleArticleSelect = (article: Article) => {
+  const handleArticleSelect = (article: Article, sourceId?: string) => {
     const isFromFeed = !activeArticle && !activeTool;
     if (isFromFeed) {
       scrollPositionRef.current = window.scrollY;
       isDetailOpen.current = true;
     }
     
+    // Store sourceId for back transition (unused for now in simplified back logic, but good to keep)
+    lastSourceIdRef.current = sourceId || article.id;
+
     if (document.startViewTransition) {
       document.documentElement.dataset.transition = 'forward';
-      // Set transitionId to the article.id so that only this article's image gets the view-transition-name
+      // Set transitionId to the sourceId (unique for this card instance) if provided,
+      // otherwise fallback to article.id (though this might cause conflicts if duplicate IDs exist)
       flushSync(() => {
-        setTransitionId(article.id);
+        setTransitionId(sourceId || article.id);
       });
       
       const transition = document.startViewTransition(() => {
@@ -94,8 +83,8 @@ const App: React.FC = () => {
       });
 
       transition.finished.finally(() => {
-        // Clear transitionId after transition is done to avoid side effects
         setTransitionId(null);
+        delete document.documentElement.dataset.transition;
       });
     } else {
       setActiveArticle(article);
@@ -103,17 +92,19 @@ const App: React.FC = () => {
     }
   };
 
-  const handleToolSelect = (tool: Tool) => {
+  const handleToolSelect = (tool: Tool, sourceId?: string) => {
     const isFromFeed = !activeArticle && !activeTool;
     if (isFromFeed) {
       scrollPositionRef.current = window.scrollY;
       isDetailOpen.current = true;
     }
     
+    lastSourceIdRef.current = sourceId || tool.id;
+
     if (document.startViewTransition) {
-      document.documentElement.dataset.transition = 'forward';
+      document.documentElement.dataset.transition = 'back';
       flushSync(() => {
-        setTransitionId(tool.id);
+        setTransitionId(null);
       });
 
       const transition = document.startViewTransition(() => {
@@ -125,6 +116,7 @@ const App: React.FC = () => {
 
       transition.finished.finally(() => {
         setTransitionId(null);
+        delete document.documentElement.dataset.transition;
       });
     } else {
       setActiveTool(tool);
@@ -136,15 +128,12 @@ const App: React.FC = () => {
     if (document.startViewTransition) {
       document.documentElement.dataset.transition = 'back';
       
-      // When going back, we need to set the transitionId again so the list item matches the detail hero
-      // activeArticle or activeTool is still set at this point
-      const currentId = activeArticle?.id || activeTool?.id;
-      if (currentId) {
-         flushSync(() => {
-            setTransitionId(currentId);
-         });
-      }
-
+      // IMPORTANT: We do NOT set transitionId here.
+      // This ensures that the Feed (list) items do NOT get the 'hero-image' view-transition-name during back navigation.
+      // Consequently, the Detail page's hero image (which has the name) will not find a matching target in the new view.
+      // This causes the browser to fallback to the default root animation (Slide Down / Fade Out) for the whole page,
+      // including the image, which effectively solves the "flying image" issue when scrolled down.
+      
       const transition = document.startViewTransition(() => {
         flushSync(() => {
           setActiveArticle(null);
@@ -154,6 +143,7 @@ const App: React.FC = () => {
 
       transition.finished.finally(() => {
         setTransitionId(null);
+        delete document.documentElement.dataset.transition;
       });
     } else {
       setActiveArticle(null);
@@ -162,12 +152,15 @@ const App: React.FC = () => {
   };
 
   useLayoutEffect(() => {
-    // Restore scroll position ONLY when returning from ANY detail view to the feed
-    // If we WERE in a detail view (isDetailOpen) and now BOTH active states are null, restore scroll
+    // View Transition handles the visual transition, but we need to restore scroll position for the Feed
+    // However, if we scroll IMMEDIATELY, it might jar the exit animation of the Detail page
+    // The browser's View Transition API snapshots the OLD state (Detail) and NEW state (Feed)
+    // If we scroll the Feed (New State) instantly, the snapshot might capture the scrolled position correctly,
+    // which is what we want.
     if (isDetailOpen.current && !activeArticle && !activeTool) {
       window.scrollTo({
         top: scrollPositionRef.current,
-        behavior: 'auto'
+        behavior: 'instant' // Use instant to ensure the feed is in place BEFORE the snapshot is rendered
       });
       isDetailOpen.current = false;
     }
@@ -176,10 +169,10 @@ const App: React.FC = () => {
   // Determine what to render
   const renderContent = () => {
     if (activeArticle) {
-      return <ArticleDetail article={activeArticle} onBack={handleBack} onArticleSelect={handleArticleSelect} theme={theme} onThemeToggle={toggleTheme} />;
+      return <ArticleDetail article={activeArticle} onBack={handleBack} onArticleSelect={handleArticleSelect} theme={theme} onThemeToggle={toggleTheme} transitionId={transitionId} />;
     }
     if (activeTool) {
-      return <ToolDetail tool={activeTool} onBack={handleBack} theme={theme} onThemeToggle={toggleTheme} />;
+      return <ToolDetail tool={activeTool} onBack={handleBack} theme={theme} onThemeToggle={toggleTheme} transitionId={transitionId} />;
     }
     
     return (
@@ -204,12 +197,7 @@ const App: React.FC = () => {
         {isFeedVisible && (
           <Navigation
             onSubscribeClick={() => {
-              setIsSearchOpen(false);
               setIsSubscribeOpen(true);
-            }}
-            onSearchClick={() => {
-              setIsSubscribeOpen(false);
-              setIsSearchOpen(true);
             }}
             theme={theme}
             onThemeToggle={toggleTheme}
@@ -223,7 +211,6 @@ const App: React.FC = () => {
         {isFeedVisible && (
           <Footer
             onSubscribeClick={() => {
-              setIsSearchOpen(false);
               setIsSubscribeOpen(true);
             }}
           />
@@ -245,7 +232,6 @@ const App: React.FC = () => {
       </div>
 
       <SubscribeOverlay isOpen={isSubscribeOpen} onClose={() => setIsSubscribeOpen(false)} />
-      <SearchOverlay isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
     </div>
   );
 };

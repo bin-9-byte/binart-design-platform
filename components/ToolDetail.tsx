@@ -8,9 +8,10 @@ interface ToolDetailProps {
   onBack: () => void;
   theme: 'light' | 'dark';
   onThemeToggle: () => void;
+  transitionId: string | null;
 }
 
-const ToolDetail: React.FC<ToolDetailProps> = ({ tool, onBack, theme, onThemeToggle }) => {
+const ToolDetail: React.FC<ToolDetailProps> = ({ tool, onBack, theme, onThemeToggle, transitionId }) => {
   // Scroll to top on mount immediately
   useLayoutEffect(() => {
     window.scrollTo({ top: 0, behavior: 'auto' });
@@ -59,38 +60,35 @@ const ToolDetail: React.FC<ToolDetailProps> = ({ tool, onBack, theme, onThemeTog
   );
 
   return (
-    <div className="bg-charcoal min-h-screen relative z-50">
+    <article className="min-h-screen bg-charcoal text-cream selection:bg-accent-orange selection:text-white pb-32">
       {/* Background Ambience */}
       <div className={`fixed top-0 left-0 w-full h-[60vh] ${tool.color} blur-[150px] opacity-10 pointer-events-none z-0`}></div>
 
-      {/* Nav Bar */}
-      <div className="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-6 md:px-12 py-6 pointer-events-none">
-        <button
-            type="button"
-            onClick={onBack}
-            className="pointer-events-auto flex items-center space-x-2 text-cream hover:text-accent-orange transition-colors group bg-charcoal/80 backdrop-blur-md px-4 py-2 rounded-full border border-line/10 shadow-lg active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-orange/50 focus-visible:ring-offset-4 focus-visible:ring-offset-charcoal"
-        >
-            <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
-            <span className="text-xs font-bold uppercase tracking-widest">Back</span>
-        </button>
-        <div className="flex gap-2">
-          <button
-            type="button"
-            onClick={onThemeToggle}
-            aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-            className="pointer-events-auto text-cream hover:text-accent-orange transition-colors bg-charcoal/80 backdrop-blur-md p-2.5 rounded-full border border-line/10 shadow-lg active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-orange/50 focus-visible:ring-offset-4 focus-visible:ring-offset-charcoal"
-          >
-            {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
-          </button>
-          <button
-              type="button"
-              aria-label="Share"
-              className="pointer-events-auto text-cream hover:text-cream transition-colors bg-charcoal/80 backdrop-blur-md p-2.5 rounded-full border border-line/10 shadow-lg active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-orange/50 focus-visible:ring-offset-4 focus-visible:ring-offset-charcoal"
-          >
-              <Share2 size={16} />
-          </button>
+      {/* Navigation - Top Bar (Floating) */}
+      <nav className="fixed top-0 left-0 right-0 z-50 px-6 py-6 md:px-12 pointer-events-none">
+        <div className="flex justify-between items-center max-w-[1920px] mx-auto pointer-events-auto">
+            <button 
+                onClick={onBack}
+                className="group flex items-center space-x-2 text-sm font-bold uppercase tracking-widest text-cream/60 hover:text-accent-orange transition-colors backdrop-blur-md bg-charcoal/50 px-4 py-2 rounded-full border border-line/10 hover:border-accent-orange/30"
+            >
+                <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform duration-fast ease-standard" />
+                <span>Back</span>
+            </button>
+            
+            <div className="flex items-center space-x-3">
+               <button 
+                  onClick={onThemeToggle}
+                  className="w-10 h-10 rounded-full flex items-center justify-center text-cream/60 hover:text-cream hover:bg-white/5 transition-all backdrop-blur-md bg-charcoal/50 border border-line/10"
+                  aria-label="Toggle theme"
+               >
+                  {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+               </button>
+               <button className="w-10 h-10 rounded-full flex items-center justify-center text-cream/60 hover:text-cream hover:bg-white/5 transition-all backdrop-blur-md bg-charcoal/50 border border-line/10">
+                  <Share2 size={18} />
+               </button>
+            </div>
         </div>
-      </div>
+      </nav>
 
       <div className="container mx-auto px-6 md:px-12 pt-32 pb-24 relative z-10 max-w-7xl">
         
@@ -99,7 +97,7 @@ const ToolDetail: React.FC<ToolDetailProps> = ({ tool, onBack, theme, onThemeTog
            {/* Icon */}
            <div 
              className={`w-24 h-24 md:w-32 md:h-32 ${tool.color} rounded-[2rem] flex items-center justify-center shadow-2xl border border-line/10 mb-8 relative group`}
-             style={{ viewTransitionName: 'hero-image' }}
+             style={transitionId ? { viewTransitionName: 'hero-image' } : undefined}
            >
                <div className="absolute inset-0 bg-gradient-to-tr from-black/20 to-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-base ease-standard rounded-[2rem]"></div>
                <div className="relative z-10 transform group-hover:scale-110 transition-transform duration-base ease-standard">
@@ -225,7 +223,7 @@ const ToolDetail: React.FC<ToolDetailProps> = ({ tool, onBack, theme, onThemeTog
             </button>
          </div>
       </div>
-    </div>
+    </article>
   );
 };
 

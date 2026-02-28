@@ -9,7 +9,7 @@ interface FeaturedSectionProps {
   title?: string;
   section?: string;
   featuredOnly?: boolean;
-  onArticleSelect: (article: Article) => void;
+  onArticleSelect: (article: Article, sourceId?: string) => void;
   transitionId: string | null;
 }
 
@@ -21,6 +21,9 @@ const FeaturedSection: React.FC<FeaturedSectionProps> = ({ id, title = "Featured
   if (featuredOnly) {
     articles = articles.filter((article) => article.isFeatured);
   }
+
+  // Generate a unique section prefix for View Transitions
+  const sectionPrefix = section || (featuredOnly ? 'featured' : 'other');
 
   return (
     <section id={id} className="py-24 relative bg-charcoal z-20">
@@ -37,20 +40,26 @@ const FeaturedSection: React.FC<FeaturedSectionProps> = ({ id, title = "Featured
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
-          {articles.map((article: Article, index) => (
+          {articles.map((article: Article, index) => {
+            const uniqueKey = `${sectionPrefix}-${article.id}`;
+            return (
             <button
               type="button"
-              key={article.id}
+              key={uniqueKey}
               className="group relative cursor-pointer w-full text-left bg-transparent p-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-orange/50 focus-visible:ring-offset-4 focus-visible:ring-offset-charcoal rounded-sm active:scale-[0.99]"
-              onClick={() => onArticleSelect(article)}
+              onClick={() => onArticleSelect(article, uniqueKey)}
             >
-              <div className="relative overflow-hidden aspect-[16/9] mb-6">
+              <div 
+                className="relative overflow-hidden aspect-[16/9] mb-6 rounded-sm bg-surface"
+                style={transitionId === uniqueKey ? { viewTransitionName: 'hero-image' } : undefined}
+              >
                 <div className="absolute inset-0 bg-muted/10 group-hover:bg-transparent transition-colors duration-base ease-standard z-10"></div>
                 <img 
                   src={article.imageUrl} 
                   alt={article.title} 
-                  className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-slow ease-standard"
-                  style={transitionId === article.id ? { viewTransitionName: 'hero-image' } : undefined}
+                  className={`w-full h-full object-cover transform transition-transform duration-slow ease-standard ${
+                    transitionId === uniqueKey ? 'scale-100' : 'group-hover:scale-105'
+                  }`}
                 />
                 <div className="absolute top-4 right-4 bg-muted/5 backdrop-blur-md px-3 py-1 rounded-full border border-line/10 z-20">
                    <span className="text-xs uppercase tracking-widest text-cream">{article.category}</span>
@@ -83,7 +92,8 @@ const FeaturedSection: React.FC<FeaturedSectionProps> = ({ id, title = "Featured
                 0{index + 1}
               </span>
             </button>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

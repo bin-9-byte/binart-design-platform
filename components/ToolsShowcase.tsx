@@ -5,7 +5,7 @@ import { Tool } from '../types';
 import { Layers, Palette, Type, Activity, Grid, Monitor, ArrowRight, ArrowLeft } from 'lucide-react';
 
 interface ToolsShowcaseProps {
-  onToolSelect?: (tool: Tool) => void;
+  onToolSelect?: (tool: Tool, sourceId?: string) => void;
   transitionId: string | null;
 }
 
@@ -73,23 +73,27 @@ const ToolsShowcase: React.FC<ToolsShowcaseProps> = ({ onToolSelect, transitionI
                 <div 
                     className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 transition-[opacity,transform] duration-base ease-standard ${isAnimating ? 'opacity-0 scale-[0.98]' : 'opacity-100 scale-100'}`}
                 >
-                    {currentTools.map((tool) => (
-                    <button
+                    {currentTools.map((tool) => {
+                      const uniqueKey = `tool-${tool.id}`;
+                      const isTransitioning = transitionId === uniqueKey;
+                      
+                      return (
+                      <button
                         type="button"
-                        key={tool.id}
-                        onClick={() => onToolSelect && onToolSelect(tool)}
-                        className="group bg-muted/5 border border-line/10 p-6 hover:bg-muted/10 transition-[background-color,border-color,color,transform] duration-base ease-standard relative overflow-hidden cursor-pointer flex flex-col justify-between h-full min-h-[240px] text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-orange/50 focus-visible:ring-offset-4 focus-visible:ring-offset-charcoal rounded-sm active:scale-[0.99]"
+                        key={uniqueKey}
+                        onClick={() => onToolSelect && onToolSelect(tool, uniqueKey)}
+                        className={`group bg-muted/5 border border-line/10 p-6 transition-[background-color,border-color,color,transform] duration-base ease-standard relative overflow-hidden cursor-pointer flex flex-col justify-between h-full min-h-[240px] text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-orange/50 focus-visible:ring-offset-4 focus-visible:ring-offset-charcoal rounded-sm active:scale-[0.99] ${
+                           isTransitioning ? 'hover:bg-muted/5' : 'hover:bg-muted/10'
+                        }`}
+                        style={isTransitioning ? { viewTransitionName: 'hero-image' } : undefined}
                     >
-                        <div className={`absolute top-0 right-0 w-24 h-24 ${tool.color} blur-[60px] opacity-20 group-hover:opacity-40 transition-opacity`}></div>
+                        <div className={`absolute top-0 right-0 w-24 h-24 ${tool.color} blur-[60px] transition-opacity ${isTransitioning ? 'opacity-20' : 'opacity-20 group-hover:opacity-40'}`}></div>
                         
                         <div className="relative z-10">
-                            <div 
-                              className="mb-4 text-cream group-hover:text-accent-orange transition-colors"
-                              style={transitionId === tool.id ? { viewTransitionName: 'hero-image' } : undefined}
-                            >
+                            <div className="mb-4 text-cream group-hover:text-accent-orange transition-colors">
                             {getIcon(tool.icon)}
                             </div>
-                            <h3 className="font-display text-lg font-bold text-cream mb-2 group-hover:translate-x-1 transition-transform">
+                            <h3 className={`font-display text-lg font-bold text-cream mb-2 transition-transform ${isTransitioning ? 'translate-x-0' : 'group-hover:translate-x-1'}`}>
                                 {tool.name}
                             </h3>
                             <p className="text-sm text-cream/50 mb-4 line-clamp-2 leading-relaxed">
@@ -98,13 +102,16 @@ const ToolsShowcase: React.FC<ToolsShowcaseProps> = ({ onToolSelect, transitionI
                         </div>
 
                         <div className="relative z-10 mt-auto pt-4 border-t border-line/10 group-hover:border-line/10 transition-colors">
-                            <div className="flex items-center space-x-2 text-[10px] font-bold uppercase tracking-widest text-cream/40 group-hover:text-cream transition-colors">
-                                <span>Get Tool</span>
-                                <ArrowRight size={10} className="group-hover:translate-x-1 transition-transform" />
+                            <div className="flex justify-between items-center text-xs font-mono">
+                                <span className="text-cream/40 uppercase tracking-widest group-hover:text-cream/60 transition-colors">
+                                   {tool.tags?.[0] || 'Design Tool'}
+                                </span>
+                                <ArrowRight size={14} className={`text-accent-orange transition-[opacity,transform] duration-base ease-standard ${isTransitioning ? 'opacity-0 -translate-x-2' : 'opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0'}`} />
                             </div>
                         </div>
                     </button>
-                    ))}
+                    );
+                    })}
                 </div>
              </div>
 

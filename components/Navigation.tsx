@@ -1,16 +1,15 @@
 
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Mail, Sun, Moon, Search } from 'lucide-react';
+import { Menu, X, Mail, Sun, Moon } from 'lucide-react';
 import { NAV_LINKS } from '../constants';
 
 interface NavigationProps {
   onSubscribeClick?: () => void;
-  onSearchClick?: () => void;
   theme: 'light' | 'dark';
   onThemeToggle: () => void;
 }
 
-const Navigation: React.FC<NavigationProps> = ({ onSubscribeClick, onSearchClick, theme, onThemeToggle }) => {
+const Navigation: React.FC<NavigationProps> = ({ onSubscribeClick, theme, onThemeToggle }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -84,14 +83,6 @@ const Navigation: React.FC<NavigationProps> = ({ onSubscribeClick, onSearchClick
             ))}
             <button
               type="button"
-              onClick={onSearchClick}
-              aria-label="Open search"
-              className="w-10 h-10 rounded-full border border-line/10 flex items-center justify-center bg-muted/5 hover:bg-muted/10 hover:border-accent-orange transition-[background-color,border-color,color,transform] duration-fast ease-standard text-cream/70 hover:text-accent-orange active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-orange/50 focus-visible:ring-offset-4 focus-visible:ring-offset-charcoal"
-            >
-              <Search size={18} />
-            </button>
-            <button
-              type="button"
               onClick={onThemeToggle}
               aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
               className="w-10 h-10 rounded-full border border-line/10 flex items-center justify-center bg-muted/5 hover:bg-muted/10 hover:border-accent-orange transition-[background-color,border-color,color,transform] duration-fast ease-standard text-cream/70 hover:text-accent-orange active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-orange/50 focus-visible:ring-offset-4 focus-visible:ring-offset-charcoal"
@@ -135,17 +126,6 @@ const Navigation: React.FC<NavigationProps> = ({ onSubscribeClick, onSearchClick
               {link.name}
             </a>
           ))}
-          <button
-            type="button"
-            onClick={() => {
-              setIsMenuOpen(false);
-              onSearchClick && onSearchClick();
-            }}
-            className="mt-8 flex items-center justify-center space-x-2 text-cream/60 hover:text-accent-orange transition-colors active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-orange/50 focus-visible:ring-offset-4 focus-visible:ring-offset-charcoal rounded-sm px-3 py-2"
-          >
-            <Search size={16} />
-            <span className="text-sm uppercase tracking-widest">Search</span>
-          </button>
           <button
             type="button"
             onClick={() => {
