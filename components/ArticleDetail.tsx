@@ -140,7 +140,7 @@ const ArticleDetail: React.FC<ArticleDetailProps> = ({ article, onBack, onArticl
   };
 
   return (
-    <article className="min-h-screen bg-charcoal text-cream selection:bg-accent-orange selection:text-white pb-32">
+    <article className="min-h-screen bg-charcoal text-cream selection:bg-accent-orange selection:text-white">
       {/* Navigation - Top Bar (Floating) */}
       <nav className="fixed top-0 left-0 right-0 z-50 px-6 py-6 md:px-12 pointer-events-none">
         <div className="flex justify-between items-center max-w-[1920px] mx-auto pointer-events-auto">
