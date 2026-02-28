@@ -60,7 +60,7 @@ const ToolDetail: React.FC<ToolDetailProps> = ({ tool, onBack, theme, onThemeTog
   );
 
   return (
-    <article className="min-h-screen bg-charcoal text-cream selection:bg-accent-orange selection:text-white pb-32">
+    <article className="min-h-screen bg-charcoal text-cream selection:bg-accent-orange selection:text-white">
       {/* Background Ambience */}
       <div className={`fixed top-0 left-0 w-full h-[60vh] ${tool.color} blur-[150px] opacity-10 pointer-events-none z-0`}></div>
 
