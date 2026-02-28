@@ -13,4 +13,11 @@ jobs:
           username: ${{ secrets.DEPLOY_USER }}
           key: ${{ secrets.DEPLOY_KEY }}
           port: ${{ secrets.DEPLOY_PORT }}
-          script: /www/wwwroot/binart.cn/deploy.sh
+          timeout: 30s
+          command_timeout: 30m
+          script_stop: true
+          debug: true
+          script: |
+            set -e
+            echo "Connected. Host: $(hostname)"
+            /bin/bash -lc "set -euxo pipefail; cd /www/wwwroot/binart.cn; bash ./deploy.sh"
