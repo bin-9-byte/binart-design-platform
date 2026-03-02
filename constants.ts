@@ -17,7 +17,7 @@ export const FEATURED_ARTICLES: Article[] = [
     readTime: '8 min',
     excerpt: '在宠物季小程序活动中，为宠物 DIY 专属茶杯提供 AIGC 风格化生成功能。主导风格流程搭建、参数调试及批量效果验证。',
     imageUrl: '/images/articles/a01/hero.webp',
-    sections: ['UX'],
+    sections: ['AIGC'],
     isFeatured: true,
     mediaType: 'image',
     blocks: [
@@ -73,7 +73,7 @@ export const FEATURED_ARTICLES: Article[] = [
         { 
             type: 'image', 
             src: '/images/articles/a01/inline-02.png', 
-            caption: 'Fig 1. Requirements Process Overview.'
+            caption: 'Fig 2. Requirements Process Overview.'
         },
         {
             type: 'gallery',
@@ -107,14 +107,14 @@ export const FEATURED_ARTICLES: Article[] = [
     ]
   },
   {
-    id: '2',
+    id: 'a2',
     title: 'Cognitive Loads in AR',
     category: 'UX Research',
     author: 'Marcus Chen',
     date: 'Oct 10, 2024',
     readTime: '12 min',
     excerpt: 'A deep dive into spatial computing and the limits of human attention in mixed reality.',
-    imageUrl: '/images/articles/a02/hero.webp',
+    imageUrl: '/images/articles/a02/hero.png',
     sections: ['UX'],
     isFeatured: true,
     mediaType: 'image',
@@ -148,18 +148,81 @@ export const FEATURED_ARTICLES: Article[] = [
     ]
   },
   {
-    id: '3',
-    title: 'Typography as Voice',
-    category: 'Interaction',
-    author: 'Sarah Jenkins',
+    id: 'a3',
+    title: 'SUMSUNG 绘图助手',
+    category: 'comfyui',
+    author: 'Ma Bin',
     date: 'Oct 05, 2024',
     readTime: '6 min',
     excerpt: 'How variable fonts are changing the way we perceive emotional tone in digital reading.',
     imageUrl: '/images/articles/a03/hero.webp', // Static image for card view
-    sections: ['Typography'],
+    sections: ['AIGC'],
     isFeatured: true, // Animated GIF for detail view
     mediaType: 'video',
     videoUrl: '/images/articles/a03/hero.mp4', // Local video source
+    blocks: [
+        { 
+            type: 'paragraph', 
+            text: "Typefaces have always had personality. But variable fonts allow that personality to have mood swings. In this comprehensive guide, we'll explore how modern typography adapts to user context." 
+        },
+        { type: 'h2', text: '1. The Static Image' },
+        { 
+            type: 'image', 
+            src: 'https://picsum.photos/1200/800?random=20', 
+            caption: 'Fig 1. Standard full-width image layout (Fixed width aligned with text).' 
+        },
+        { 
+            type: 'paragraph', 
+            text: "Notice how the image above aligns perfectly with this text block. Maintaining a consistent column width (max-w-2xl) creates a more reading-friendly rhythm." 
+        },
+        { type: 'h2', text: '2. The Animated GIF' },
+        { 
+            type: 'image', 
+            src: 'https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif', 
+            caption: 'Fig 2. GIFs are treated as images but bring motion to the layout.' 
+        },
+        { type: 'h2', text: '3. The Video Embed' },
+        { 
+            type: 'video', 
+            videoUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+            caption: 'Fig 3. Video content shares the same visual container style as images.' 
+        },
+        { type: 'h2', text: '4. Structural Elements' },
+        { 
+            type: 'list', 
+            listType: 'ul',
+            items: [
+                'Consistent border radius (rounded-sm)',
+                'Subtle border (border-white/5)',
+                'Deep shadow (shadow-2xl) for depth'
+            ] 
+        },
+        { type: 'divider' },
+        { 
+            type: 'quote', 
+            text: "Consistency is the foundation of trust in interface design.",
+            caption: "Design System Principle"
+        },
+        { 
+            type: 'note', 
+            title: 'Layout Note', 
+            text: 'All media elements in this article use the exact same width constraint as the text, ensuring a "fixed" and coordinated vertical rhythm.' 
+        }
+    ]
+  },
+  {
+    id: 'a4',
+    title: '乙女风格模型',
+    category: 'model train',
+    author: 'Ma Bin',
+    date: 'Oct 05, 2024',
+    readTime: '6 min',
+    excerpt: 'How variable fonts are changing the way we perceive emotional tone in digital reading.',
+    imageUrl: '/images/articles/a04/hero.webp', // Static image for card view
+    sections: ['AIGC'],
+    isFeatured: true, // Animated GIF for detail view
+    mediaType: 'image',
+    //videoUrl: '/images/articles/a03/hero.mp4', // Local video source
     blocks: [
         { 
             type: 'paragraph', 
@@ -414,7 +477,7 @@ export const DESIGN_TOOLS: Tool[] = [
     color: 'bg-blue-500',
     pricing: 'Free',
     platform: ['Web'],
-    tags: ['Typography', 'CSS', 'Frontend']
+    tags: ['AIGC', 'CSS', 'Frontend']
   },
   {
     id: 't4',
@@ -502,7 +565,7 @@ export const DESIGN_TOOLS: Tool[] = [
     color: 'bg-orange-400',
     pricing: 'Freemium',
     platform: ['Web', 'Figma'],
-    tags: ['Typography', 'Design', 'AI']
+    tags: ['AIGC', 'Design', 'AI']
   },
   {
     id: 't12',

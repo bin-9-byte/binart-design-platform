@@ -53,7 +53,7 @@ const FeaturedSection: React.FC<FeaturedSectionProps> = ({ id, title = "Featured
                 className="relative overflow-hidden aspect-[16/9] mb-6 rounded-sm bg-surface"
                 style={transitionId === uniqueKey ? { viewTransitionName: 'hero-image' } : undefined}
               >
-                <div className="absolute inset-0 bg-muted/10 group-hover:bg-transparent transition-colors duration-base ease-standard z-10"></div>
+                <div className="absolute inset-0 bg-black/[0.04] group-hover:bg-black/[0.02] dark:bg-white/10 dark:group-hover:bg-transparent transition-colors duration-base ease-standard z-10"></div>
                 <img 
                   src={article.imageUrl} 
                   alt={article.title} 
