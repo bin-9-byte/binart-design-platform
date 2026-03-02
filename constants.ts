@@ -12,41 +12,68 @@ export const FEATURED_ARTICLES: Article[] = [
     id: '1',
     title: 'CHAGEE 和萌友们',
     category: 'Visual Design',
-    author: 'Elena Vance',
-    date: 'Oct 12, 2024',
+    author: 'Ma Bin',
+    date: 'Aug 12, 2025',
     readTime: '8 min',
-    excerpt: 'Exploring negative space as the primary active element in modern interface paradigms.',
+    excerpt: '在宠物季小程序活动中，为宠物 DIY 专属茶杯提供 AIGC 风格化生成功能。主导风格流程搭建、参数调试及批量效果验证。',
     imageUrl: '/images/articles/a01/hero.webp',
     sections: ['UX'],
     isFeatured: true,
     mediaType: 'image',
     blocks: [
         {
-            type: 'paragraph',
-            text: "In the cacophony of digital noise, silence is not merely the absence of content—it is a structural material. Just as an architect uses void to define volume, a designer uses negative space to define interaction. This isn't about minimalism for minimalism's sake; it's about cognitive preservation."
+            type: 'h2',
+            text: "01.需求分析"
+        },
+        { 
+            type: 'image', 
+            src: '/images/articles/a01/inline-01.webp', 
+            caption: 'Fig 1. Requirements Process Overview.'
         },
         {
             type: 'quote',
-            text: "Space is the breath of art.",
-            caption: "Frank Lloyd Wright"
+            text: "风格需高度还原。",
+            caption: "CHAGEE Design Department"
         },
         {
             type: 'paragraph',
-            text: "When we look at high-density interfaces, the eye struggles to find a resting place. This phenomenon, known as 'visual crowding', significantly increases the cognitive load required to process information. By expanding margins and increasing line height, we don't just make things 'look clean'—we fundamentally alter the time-to-comprehension."
+            text: "宠物允许在保持足够辨识度的基础上有些许差异；但必须保持高度的风格一致性，若风格不达标，活动将直接取消。"
         },
+        {
+            type: 'quote',
+            text: "交付周期极短。",
+            caption: "Product managers of both parties"
+        },
+        {
+            type: 'paragraph',
+            text: "周四下午接到需求并开始投入，周日小程序活动需正式上线，还要计入研发、测试时间。"
+        },
+        { type: 'divider' },
         {
             type: 'h2',
-            text: "The Active Void"
+            text: "02.流程拆解"
+        },
+
+        {
+            type: 'paragraph',
+            text: "基于这两个限制，我聚焦“风格精准还原”这一关键痛点，并在考虑客户与公司成本后，提出了新的流程方案："
         },
         {
-            type: 'image',
-            src: '/images/articles/a01/inline-01.webp',
-            caption: 'Fig 1. Visual tension created through asymmetrical whitespace.',
-            alt: 'Abstract geometric composition'
+            type: 'list',
+            listType: 'ul',
+            items: [
+                'VLM：分析原图并生成结构化图像特征描述；',
+                '3.0 模型：利用调试好的预设风格提示词实现高一致性的风格还原。'
+            ]
         },
         {
             type: 'paragraph',
-            text: "Consider the active void. It pushes content, it groups elements, and it creates a rhythm. In our recent case study redesigning the fintech dashboard for 'Lumina', we removed 40% of the visible borders and replaced them with proximity-based grouping. The result was a 15% increase in task completion speed."
+            text: "两者结合，构建可稳定复现的 AIGC 生成路径。"
+        },
+        { 
+            type: 'image', 
+            src: '/images/articles/a01/inline-02.png', 
+            caption: 'Fig 1. Requirements Process Overview.'
         },
         {
             type: 'gallery',

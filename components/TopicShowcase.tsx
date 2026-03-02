@@ -121,7 +121,7 @@ const TopicShowcase: React.FC<TopicShowcaseProps> = ({ onArticleSelect, transiti
                     
                     {/* Main Image Container */}
                     <div 
-                        className="relative w-full h-full overflow-hidden bg-charcoal border border-line/10 group-hover:border-transparent rounded-sm transition-colors duration-base ease-standard z-10"
+                        className="relative w-full h-full overflow-hidden bg-charcoal rounded-sm z-10"
                         style={transitionId === uniqueKey ? { viewTransitionName: 'hero-image' } : undefined}
                     >
                         <div className="absolute inset-0 bg-muted/10 group-hover:bg-transparent transition-colors duration-base ease-standard z-10"></div>

@@ -8,7 +8,7 @@ export const TextBlock: React.FC<{ block: ContentBlock }> = ({ block }) => (
 );
 
 export const HeadingBlock: React.FC<{ block: ContentBlock }> = ({ block }) => (
-  <h2 className="font-display text-3xl font-bold text-cream mt-16 mb-6">
+  <h2 className="font-display text-3xl font-bold text-cream mt-16 mb-6 leading-tight">
     {block.text}
   </h2>
 );
@@ -18,7 +18,7 @@ export const ImageBlock: React.FC<{ block: ContentBlock }> = ({ block }) => (
     <img 
         src={block.src} 
         alt={block.alt || 'Article image'} 
-        className="w-full h-auto rounded-sm shadow-2xl border border-line/10"
+        className="block w-full h-auto rounded-sm"
     />
     {block.caption && (
         <p className="mt-3 text-center text-xs font-mono text-cream/40">{block.caption}</p>
@@ -26,10 +26,13 @@ export const ImageBlock: React.FC<{ block: ContentBlock }> = ({ block }) => (
   </div>
 );
 
-export const QuoteBlock: React.FC<{ block: ContentBlock }> = ({ block }) => (
-  <blockquote className="my-12 relative">
+export const QuoteBlock: React.FC<{ block: ContentBlock; variant?: 'default' | 'afterHeading' }> = ({ block, variant = 'default' }) => (
+  <blockquote className={variant === 'afterHeading' ? 'mt-6 mb-12 relative' : 'my-12 relative'}>
      <div className="absolute -left-6 top-0 text-6xl text-accent-orange opacity-50 font-serif leading-none">"</div>
-     <p className="font-display text-3xl font-bold text-cream italic leading-tight pl-6">
+     <p className={variant === 'afterHeading'
+       ? 'font-display text-lg md:text-xl font-semibold text-cream italic leading-tight pl-6'
+       : 'font-display text-xl md:text-2xl font-semibold text-cream italic leading-tight pl-6'
+     }>
        {block.text}
      </p>
      {block.caption && (
@@ -43,7 +46,7 @@ export const QuoteBlock: React.FC<{ block: ContentBlock }> = ({ block }) => (
 export const GalleryBlock: React.FC<{ block: ContentBlock }> = ({ block }) => (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-12">
         {block.images?.map((img, i) => (
-            <img key={i} src={img} className="w-full h-64 object-cover rounded-sm grayscale hover:grayscale-0 transition-[filter] duration-base ease-standard" alt="Gallery item" />
+            <img key={i} src={img} className="block w-full h-auto rounded-sm grayscale hover:grayscale-0 transition-[filter] duration-base ease-standard" alt="Gallery item" />
         ))}
     </div>
 );
@@ -82,7 +85,7 @@ export const VideoBlock: React.FC<{ block: ContentBlock }> = ({ block }) => (
             controls
             playsInline
             loop
-            className="w-full h-auto rounded-sm shadow-2xl border border-line/10 bg-black"
+            className="w-full h-auto rounded-sm bg-black"
         />
         {block.caption && (
             <p className="mt-3 text-center text-xs font-mono text-cream/40">{block.caption}</p>

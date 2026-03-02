@@ -28,7 +28,6 @@ const BlockComponents: Record<string, React.FC<{ block: ContentBlock }>> = {
   paragraph: TextBlock,
   h2: HeadingBlock,
   image: ImageBlock,
-  quote: QuoteBlock,
   gallery: GalleryBlock,
   divider: DividerBlock,
   note: NoteBlock,
@@ -200,6 +199,16 @@ const ArticleDetail: React.FC<ArticleDetailProps> = ({ article, onBack, onArticl
              {/* If no blocks exist, render default content */}
              {article.blocks ? (
                  article.blocks.map((block, idx) => {
+                   const prevType = idx > 0 ? article.blocks?.[idx - 1]?.type : null;
+                   if (block.type === 'quote') {
+                     return (
+                       <QuoteBlock
+                         key={idx}
+                         block={block}
+                         variant={prevType === 'h2' ? 'afterHeading' : 'default'}
+                       />
+                     );
+                   }
                    const Component = BlockComponents[block.type];
                    return Component ? <Component key={idx} block={block} /> : null;
                  })

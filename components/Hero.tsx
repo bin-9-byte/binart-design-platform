@@ -11,7 +11,8 @@ const Hero: React.FC = () => {
   );
   const containerRef = useRef<HTMLElement | null>(null);
   const measureRef = useRef<HTMLDivElement | null>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const progressRef = useRef({ current: 0, target: 0 });
 
   const computeLayout = () => {
     const vw = window.innerWidth;
@@ -44,8 +45,10 @@ const Hero: React.FC = () => {
 
   useEffect(() => {
     let raf = 0;
+    let lerpRaf = 0;
     let containerTop = 0;
     let viewportH = 0;
+    const LERP_FACTOR = 0.15;
 
     const measure = () => {
       viewportH = window.innerHeight;
@@ -71,8 +74,17 @@ const Hero: React.FC = () => {
         const animationRange = viewportH * 1.8;
         const raw = (window.scrollY - start) / animationRange;
         const next = Math.max(0, Math.min(1, raw));
-        setProgress(next);
+        progressRef.current.target = next;
       });
+    };
+
+    const lerpLoop = () => {
+      const diff = progressRef.current.target - progressRef.current.current;
+      if (Math.abs(diff) > 0.0001) {
+        progressRef.current.current += diff * LERP_FACTOR;
+        setProgress(progressRef.current.current);
+      }
+      lerpRaf = window.requestAnimationFrame(lerpLoop);
     };
 
     const onResize = () => {
@@ -83,12 +95,14 @@ const Hero: React.FC = () => {
 
     measure();
     onScroll();
+    lerpLoop();
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onResize);
     return () => {
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('resize', onResize);
       if (raf) window.cancelAnimationFrame(raf);
+      if (lerpRaf) window.cancelAnimationFrame(lerpRaf);
     };
   }, []);
 
@@ -190,7 +204,7 @@ const Hero: React.FC = () => {
             style={{ opacity: easedSlow * overlayMax }}
           ></div>
           <div
-            className="absolute inset-0 border border-line/10 shadow-2xl pointer-events-none"
+            className="absolute inset-0 shadow-2xl pointer-events-none"
             style={{ opacity: eased }}
           ></div>
         </div>

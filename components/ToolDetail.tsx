@@ -32,7 +32,7 @@ const ToolDetail: React.FC<ToolDetailProps> = ({ tool, onBack, theme, onThemeTog
 
   // Mock Screenshots Generator
   const renderScreenshot = (index: number) => (
-    <div key={index} className="flex-none w-[280px] md:w-[320px] aspect-[9/16] bg-surface rounded-3xl border border-line/10 relative overflow-hidden group snap-center shadow-2xl">
+    <div key={index} className="flex-none w-[280px] md:w-[320px] aspect-[9/16] bg-surface rounded-3xl relative overflow-hidden group snap-center shadow-2xl">
        {/* Abstract UI content */}
        <div className="absolute top-0 left-0 right-0 h-12 bg-muted/5 border-b border-line/10 flex items-center justify-between px-4 z-10">
           <div className="w-16 h-2 bg-muted/10 rounded-full"></div>
