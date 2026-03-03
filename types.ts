@@ -1,5 +1,59 @@
 
-export type BlockType = 'paragraph' | 'h2' | 'image' | 'quote' | 'gallery' | 'divider' | 'note' | 'list' | 'video';
+export type BlockType = 
+  | 'paragraph' 
+  | 'h2' 
+  | 'image' 
+  | 'quote' 
+  | 'gallery' 
+  | 'divider' 
+  | 'note' 
+  | 'list' 
+  | 'video'
+  | 'persona'
+  | 'grid'
+  | 'stats'
+  | 'process'
+  | 'comparison'
+  | 'kv'
+  | 'insights'
+  | 'journey';
+
+export interface GridItem {
+  title?: string;
+  description?: string;
+  image?: string;
+}
+
+export interface StatItem {
+  label: string;
+  value: string;
+  description?: string;
+}
+
+export interface ProcessStep {
+  title: string;
+  description: string;
+}
+
+export interface KeyValueItem {
+  key: string;
+  value: string;
+  note?: string;
+}
+
+export interface InsightItem {
+  title: string;
+  evidence?: string;
+  impact?: string;
+  recommendation?: string;
+}
+
+export interface JourneyPhase {
+  name: string;
+  goal?: string;
+  painPoints?: string[];
+  opportunities?: string[];
+}
 
 export interface ContentBlock {
   type: BlockType;
@@ -16,6 +70,29 @@ export interface ContentBlock {
   // For VideoBlock
   videoUrl?: string;
   poster?: string;
+
+  // New fields for UX Templates
+  role?: string;        // For Persona
+  bio?: string;         // For Persona
+  traits?: string[];    // For Persona
+  
+  gridItems?: GridItem[]; // For Grid
+  columns?: number;       // For Grid
+  
+  stats?: StatItem[];     // For Stats
+  
+  steps?: ProcessStep[];  // For Process
+  
+  imageBefore?: string;   // For Comparison
+  imageAfter?: string;    // For Comparison
+  labelBefore?: string;   // For Comparison
+  labelAfter?: string;    // For Comparison
+
+  kvItems?: KeyValueItem[];
+
+  insights?: InsightItem[];
+
+  phases?: JourneyPhase[];
 }
 
 export interface Article {

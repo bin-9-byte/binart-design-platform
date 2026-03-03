@@ -12,7 +12,15 @@ import {
   DividerBlock,
   NoteBlock,
   ListBlock,
-  VideoBlock
+  VideoBlock,
+  PersonaBlock,
+  GridBlock,
+  StatsBlock,
+  ProcessBlock,
+  ComparisonBlock,
+  KeyValueBlock,
+  InsightsBlock,
+  JourneyBlock
 } from './blocks';
 
 interface ArticleDetailProps {
@@ -32,7 +40,15 @@ const BlockComponents: Record<string, React.FC<{ block: ContentBlock }>> = {
   divider: DividerBlock,
   note: NoteBlock,
   list: ListBlock,
-  video: VideoBlock
+  video: VideoBlock,
+  persona: PersonaBlock,
+  grid: GridBlock,
+  stats: StatsBlock,
+  process: ProcessBlock,
+  comparison: ComparisonBlock,
+  kv: KeyValueBlock,
+  insights: InsightsBlock,
+  journey: JourneyBlock
 };
 
 const ArticleDetail: React.FC<ArticleDetailProps> = ({ article, onBack, onArticleSelect, theme, onThemeToggle, transitionId }) => {

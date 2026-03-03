@@ -25,7 +25,7 @@ const Footer: React.FC<FooterProps> = ({ onSubscribeClick }) => {
                 <input 
                     type="email" 
                     placeholder="Enter your email" 
-                    className="bg-transparent border-b border-line/30 py-3 text-lg text-cream placeholder-cream/40 focus:outline-none focus:border-accent-orange w-full max-w-sm transition-colors focus-visible:ring-2 focus-visible:ring-accent-orange/50 focus-visible:ring-offset-4 focus-visible:ring-offset-charcoal rounded-sm"
+                    className="bg-transparent border-b border-line/30 hover:border-line/50 py-3 text-lg text-cream placeholder-cream/40 focus:outline-none focus:border-accent-orange w-full max-w-sm transition-[border-color] duration-fast ease-standard"
                 />
                 <button
                   type="submit"

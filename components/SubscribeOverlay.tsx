@@ -208,7 +208,7 @@ const SubscribeOverlay: React.FC<SubscribeOverlayProps> = ({ isOpen, onClose }) 
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="Enter your email address..."
                       disabled={status === 'submitting'}
-                      className="w-full bg-transparent border-b border-line/20 py-6 pl-12 pr-20 text-2xl md:text-3xl font-display text-cream placeholder-cream/40 focus:outline-none focus:border-accent-orange transition-colors disabled:opacity-50 focus-visible:ring-2 focus-visible:ring-accent-orange/50 focus-visible:ring-offset-4 focus-visible:ring-offset-surface rounded-sm"
+                      className="w-full bg-transparent border-b border-line/20 hover:border-line/40 py-6 pl-12 pr-20 text-2xl md:text-3xl font-display text-cream placeholder-cream/40 focus:outline-none focus:border-accent-orange transition-[border-color] duration-fast ease-standard disabled:opacity-50"
                   />
                   <button 
                     type="submit"
