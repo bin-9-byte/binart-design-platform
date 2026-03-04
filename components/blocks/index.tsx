@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ContentBlock } from '../../types';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 export const TextBlock: React.FC<{ block: ContentBlock }> = ({ block }) => (
   <p className="font-sans text-lg leading-8 text-cream/80 mb-8 font-light tracking-wide">
@@ -249,52 +250,155 @@ export const InsightsBlock: React.FC<{ block: ContentBlock }> = ({ block }) => (
     </div>
 );
 
-export const JourneyBlock: React.FC<{ block: ContentBlock }> = ({ block }) => (
-    <div className="my-12">
-        <div className="flex gap-4 overflow-x-auto pb-2">
-            {block.phases?.map((phase, i) => (
+export const JourneyBlock: React.FC<{ block: ContentBlock }> = ({ block }) => {
+    const scrollerRef = useRef<HTMLDivElement | null>(null);
+    const [canScrollLeft, setCanScrollLeft] = useState(false);
+    const [canScrollRight, setCanScrollRight] = useState(false);
+
+    const phases = useMemo(() => block.phases || [], [block.phases]);
+
+    const updateScrollState = useCallback(() => {
+        const el = scrollerRef.current;
+        if (!el) return;
+        const maxScrollLeft = Math.max(0, el.scrollWidth - el.clientWidth);
+        const left = el.scrollLeft;
+        setCanScrollLeft(left > 2);
+        setCanScrollRight(left < maxScrollLeft - 2);
+    }, []);
+
+    useEffect(() => {
+        updateScrollState();
+        const el = scrollerRef.current;
+        if (!el) return;
+
+        let rafId = 0;
+        const onScroll = () => {
+            cancelAnimationFrame(rafId);
+            rafId = requestAnimationFrame(updateScrollState);
+        };
+
+        el.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', updateScrollState);
+        return () => {
+            cancelAnimationFrame(rafId);
+            el.removeEventListener('scroll', onScroll);
+            window.removeEventListener('resize', updateScrollState);
+        };
+    }, [updateScrollState]);
+
+    const scrollByAmount = (direction: -1 | 1) => {
+        const el = scrollerRef.current;
+        if (!el) return;
+        const amount = Math.max(240, Math.round(el.clientWidth * 0.9));
+        let behavior: ScrollBehavior = 'smooth';
+        try {
+            if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                behavior = 'auto';
+            }
+        } catch {}
+        el.scrollBy({ left: direction * amount, behavior });
+    };
+
+    if (!phases.length) return null;
+
+    return (
+        <div className="my-12">
+            <div className="relative group">
                 <div
-                    key={`${phase.name}-${i}`}
-                    className="min-w-[280px] max-w-[360px] flex-shrink-0 bg-white/5 rounded-lg border border-white/10 p-6"
+                    className={[
+                        'flex gap-4 overflow-x-auto pb-3 px-1',
+                        'snap-x snap-mandatory scroll-px-6',
+                        '[-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden'
+                    ].join(' ')}
+                    ref={scrollerRef}
+                    role="region"
+                    aria-label="Journey map"
+                    tabIndex={0}
+                    onKeyDown={(e) => {
+                        if (e.key === 'ArrowLeft') {
+                            e.preventDefault();
+                            scrollByAmount(-1);
+                        }
+                        if (e.key === 'ArrowRight') {
+                            e.preventDefault();
+                            scrollByAmount(1);
+                        }
+                    }}
                 >
-                    <div className="flex items-center justify-between mb-4">
-                        <div className="font-display font-bold text-cream">{phase.name}</div>
-                        <div className="text-xs font-mono text-cream/40">{String(i + 1).padStart(2, '0')}</div>
-                    </div>
-                    {phase.goal && (
-                        <div className="mb-4">
-                            <div className="text-xs font-mono uppercase tracking-widest text-cream/40 mb-2">Goal</div>
-                            <div className="text-cream/70 leading-relaxed">{phase.goal}</div>
+                    {phases.map((phase, i) => (
+                        <div
+                            key={`${phase.name}-${i}`}
+                            className="min-w-[280px] max-w-[360px] flex-shrink-0 bg-white/5 rounded-lg border border-white/10 p-6 snap-start focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-orange/50"
+                            tabIndex={0}
+                            role="group"
+                            aria-label={`Phase ${i + 1}: ${phase.name}`}
+                            onFocus={() => {
+                                const el = scrollerRef.current;
+                                if (!el) return;
+                                const target = el.querySelectorAll<HTMLElement>('[role="group"]')[i];
+                                target?.scrollIntoView({ inline: 'start', block: 'nearest', behavior: 'smooth' });
+                            }}
+                        >
+                            <div className="flex items-center justify-between mb-4">
+                                <div className="font-display font-bold text-cream">{phase.name}</div>
+                                <div className="text-xs font-mono text-cream/40">{String(i + 1).padStart(2, '0')}</div>
+                            </div>
+                            {phase.goal && (
+                                <div className="mb-4">
+                                    <div className="text-xs font-mono uppercase tracking-widest text-cream/40 mb-2">Goal</div>
+                                    <div className="text-cream/70 leading-relaxed">{phase.goal}</div>
+                                </div>
+                            )}
+                            {phase.painPoints?.length ? (
+                                <div className="mb-4">
+                                    <div className="text-xs font-mono uppercase tracking-widest text-cream/40 mb-2">Pain</div>
+                                    <ul className="space-y-2 text-cream/70">
+                                        {phase.painPoints.map((p, idx) => (
+                                            <li key={`${p}-${idx}`} className="flex gap-2">
+                                                <span className="text-accent-orange/80">•</span>
+                                                <span className="leading-relaxed">{p}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            ) : null}
+                            {phase.opportunities?.length ? (
+                                <div>
+                                    <div className="text-xs font-mono uppercase tracking-widest text-accent-orange/80 mb-2">Opportunity</div>
+                                    <ul className="space-y-2 text-cream">
+                                        {phase.opportunities.map((o, idx) => (
+                                            <li key={`${o}-${idx}`} className="flex gap-2">
+                                                <span className="text-accent-orange">•</span>
+                                                <span className="leading-relaxed">{o}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            ) : null}
                         </div>
-                    )}
-                    {phase.painPoints?.length ? (
-                        <div className="mb-4">
-                            <div className="text-xs font-mono uppercase tracking-widest text-cream/40 mb-2">Pain</div>
-                            <ul className="space-y-2 text-cream/70">
-                                {phase.painPoints.map((p, idx) => (
-                                    <li key={`${p}-${idx}`} className="flex gap-2">
-                                        <span className="text-accent-orange/80">•</span>
-                                        <span className="leading-relaxed">{p}</span>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                    ) : null}
-                    {phase.opportunities?.length ? (
-                        <div>
-                            <div className="text-xs font-mono uppercase tracking-widest text-accent-orange/80 mb-2">Opportunity</div>
-                            <ul className="space-y-2 text-cream">
-                                {phase.opportunities.map((o, idx) => (
-                                    <li key={`${o}-${idx}`} className="flex gap-2">
-                                        <span className="text-accent-orange">•</span>
-                                        <span className="leading-relaxed">{o}</span>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                    ) : null}
+                    ))}
                 </div>
-            ))}
+
+                <div className={`pointer-events-none absolute inset-y-0 left-0 w-12 bg-gradient-to-r from-charcoal to-transparent transition-opacity duration-base ease-standard ${canScrollLeft ? 'opacity-100' : 'opacity-0'}`} />
+                <div className={`pointer-events-none absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-charcoal to-transparent transition-opacity duration-base ease-standard ${canScrollRight ? 'opacity-100' : 'opacity-0'}`} />
+
+                <button
+                    type="button"
+                    aria-label="Scroll left"
+                    onClick={() => scrollByAmount(-1)}
+                    className={`absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-surface/80 backdrop-blur-md border border-line/10 text-cream/70 hover:text-cream hover:border-accent-orange/30 transition-all duration-base ease-standard focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-orange/50 focus-visible:ring-offset-4 focus-visible:ring-offset-charcoal ${canScrollLeft ? 'pointer-events-auto opacity-100 md:opacity-0 md:group-hover:opacity-100' : 'pointer-events-none opacity-0'}`}
+                >
+                    <ChevronLeft size={18} className="mx-auto" />
+                </button>
+                <button
+                    type="button"
+                    aria-label="Scroll right"
+                    onClick={() => scrollByAmount(1)}
+                    className={`absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-surface/80 backdrop-blur-md border border-line/10 text-cream/70 hover:text-cream hover:border-accent-orange/30 transition-all duration-base ease-standard focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-orange/50 focus-visible:ring-offset-4 focus-visible:ring-offset-charcoal ${canScrollRight ? 'pointer-events-auto opacity-100 md:opacity-0 md:group-hover:opacity-100' : 'pointer-events-none opacity-0'}`}
+                >
+                    <ChevronRight size={18} className="mx-auto" />
+                </button>
+            </div>
         </div>
-    </div>
-);
+    );
+};

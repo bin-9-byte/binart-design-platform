@@ -207,11 +207,13 @@ const ArticleDetail: React.FC<ArticleDetailProps> = ({ article, onBack, onArticl
                 <span>{article.category}</span>
                 <span className="hidden md:inline">•</span>
                 <span>{article.date}</span>
+                <span className="hidden md:inline">•</span>
+                <span>{article.readTime}</span>
              </div>
         </div>
 
         {/* 3. Main Article Body */}
-        <article className="max-w-2xl mx-auto pb-32">
+        <article className="max-w-3xl mx-auto pb-32">
              {/* If no blocks exist, render default content */}
              {article.blocks ? (
                  article.blocks.map((block, idx) => {

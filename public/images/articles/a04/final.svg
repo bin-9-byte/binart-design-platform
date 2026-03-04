@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#120b16"/>
+      <stop offset="0.4" stop-color="#111827"/>
+      <stop offset="1" stop-color="#0b1220"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#F97316"/>
+      <stop offset="0.55" stop-color="#FB7185"/>
+      <stop offset="1" stop-color="#60A5FA"/>
+    </linearGradient>
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="22"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="800" fill="url(#bg)"/>
+  <circle cx="340" cy="280" r="250" fill="#FB7185" opacity="0.10" filter="url(#glow)"/>
+  <circle cx="900" cy="560" r="280" fill="#60A5FA" opacity="0.08" filter="url(#glow)"/>
+  <circle cx="820" cy="220" r="220" fill="#F97316" opacity="0.08" filter="url(#glow)"/>
+
+  <rect x="88" y="84" width="1024" height="632" rx="18" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.10)"/>
+  <rect x="112" y="112" width="360" height="10" rx="5" fill="url(#accent)" opacity="0.92"/>
+  <text x="112" y="156" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace" font-size="16" fill="rgba(255,255,255,0.70)">FINAL · v1.0 · Otome LoRA</text>
+
+  <g transform="translate(112 190)">
+    <rect width="976" height="500" rx="16" fill="rgba(0,0,0,0.24)" stroke="rgba(255,255,255,0.08)"/>
+    <circle cx="488" cy="240" r="160" fill="rgba(251,113,133,0.10)"/>
+    <circle cx="488" cy="240" r="120" fill="rgba(249,115,22,0.08)"/>
+    <circle cx="450" cy="220" r="16" fill="rgba(255,255,255,0.22)"/>
+    <circle cx="526" cy="220" r="16" fill="rgba(255,255,255,0.22)"/>
+    <path d="M420 300c50 32 96 48 138 48 42 0 88-16 138-48" fill="none" stroke="rgba(255,255,255,0.22)" stroke-width="10" stroke-linecap="round"/>
+    <path d="M188 446c118-108 230-162 336-162 106 0 218 54 336 162" fill="none" stroke="rgba(255,255,255,0.14)" stroke-width="10" stroke-linecap="round"/>
+    <rect x="28" y="28" width="330" height="30" rx="15" fill="rgba(0,0,0,0.55)"/>
+    <text x="44" y="49" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace" font-size="14" fill="rgba(255,255,255,0.88)">stable · clean · romantic</text>
+    <rect x="28" y="74" width="560" height="28" rx="14" fill="rgba(255,255,255,0.06)"/>
+    <text x="44" y="94" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace" font-size="13" fill="rgba(255,255,255,0.55)">prompt template + negative library + regression set</text>
+  </g>
+</svg>
