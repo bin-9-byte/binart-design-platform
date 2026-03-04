@@ -130,6 +130,7 @@ export enum Category {
   ALL = 'All',
   UX_RESEARCH = 'UX Research',
   VISUAL_DESIGN = 'Visual Design',
+  UI_DESIGN = 'UI Design',
   INTERACTION = 'Interaction',
   STRATEGY = 'Strategy'
 }

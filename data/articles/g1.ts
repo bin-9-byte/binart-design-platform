@@ -3,13 +3,13 @@ import type { Article } from '../../types';
 export const ARTICLE_G1 = {
   id: 'g1',
   title: '残碑',
-  category: 'Guides',
+  category: 'UI',
   author: 'BINART Studio',
   date: 'Oct 01, 2024',
   readTime: '7 min',
   excerpt: 'A practical workflow to turn messy requirements into a clear design plan.',
   imageUrl: '/images/articles/g01/hero.webp',
-  sections: ['Guides'],
+  sections: ['UI'],
   isFeatured: false,
   mediaType: 'image',
   blocks: [

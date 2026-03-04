@@ -8,7 +8,7 @@ export const ARTICLE_U1 = {
   date: 'Oct 10, 2024',
   readTime: '12 min',
   excerpt: '为运营与商家提供“商品素材一键生成”的工作台，聚焦效率、可控性与一致性。',
-  imageUrl: '/images/articles/a02/hero.png',
+  imageUrl: '/images/articles/u01/hero.png',
   sections: ['UX'],
   isFeatured: true,
   mediaType: 'image',

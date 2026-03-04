@@ -181,8 +181,10 @@ const App: React.FC = () => {
         {/* Added id="discover" for navigation, reverted title to Featured Stories */}
         <FeaturedSection id="discover" title="Featured Stories" featuredOnly onArticleSelect={handleArticleSelect} transitionId={transitionId} />
         <FeaturedSection title="UX" section="UX" onArticleSelect={handleArticleSelect} transitionId={transitionId} />
+        <FeaturedSection title="Architecture" section="architecture" onArticleSelect={handleArticleSelect} transitionId={transitionId} />
         <FeaturedSection title="AIGC" section="AIGC" onArticleSelect={handleArticleSelect} transitionId={transitionId} />
-        <FeaturedSection title="Guides" section="Guides" onArticleSelect={handleArticleSelect} transitionId={transitionId} />
+        <FeaturedSection title="UI" section="UI" onArticleSelect={handleArticleSelect} transitionId={transitionId} />
+        <FeaturedSection title="Photography" section="photography" onArticleSelect={handleArticleSelect} transitionId={transitionId} />
         <TopicShowcase onArticleSelect={handleArticleSelect} transitionId={transitionId} />
         <ToolsShowcase onToolSelect={handleToolSelect} transitionId={transitionId} />
       </>
