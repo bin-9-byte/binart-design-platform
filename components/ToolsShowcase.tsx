@@ -59,9 +59,6 @@ const ToolsShowcase: React.FC<ToolsShowcaseProps> = ({ onToolSelect, transitionI
                  <p className="text-cream/60 leading-relaxed mb-8">
                    A selection of resources to accelerate your workflow and expand your creative capability. Updated weekly.
                  </p>
-                <a href="#" className="text-sm font-bold uppercase tracking-widest text-accent-orange hover:text-cream transition-colors border-b border-accent-orange/30 pb-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-orange/50 focus-visible:ring-offset-4 focus-visible:ring-offset-charcoal rounded-sm">
-                    Submit a tool
-                 </a>
              </div>
           </div>
 
