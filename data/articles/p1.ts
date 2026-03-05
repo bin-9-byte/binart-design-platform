@@ -9,7 +9,7 @@ export const ARTICLE_P1 = {
   readTime: '6 min',
   excerpt:
     '从新宿的霓虹到清晨的高架桥阴影：一组关于东京的叙事摄影，记录“人流与静止”的交替。',
-  imageUrl: 'https://picsum.photos/seed/tokyo-hero/1600/900',
+  imageUrl: '/images/articles/p01/hero.png',
   //sections: ['photography'],
   isFeatured: false,
   isPhotography: true,

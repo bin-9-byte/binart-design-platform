@@ -131,13 +131,12 @@ const ArticleDetail: React.FC<ArticleDetailProps> = ({ article, onBack, onArticl
     if (article.mediaType === 'gif') {
       return (
         <div className="w-full h-full relative flex items-center justify-center">
-            {/* Prioritize gifUrl for animation, fallback to imageUrl if missing */}
             <img 
                 src={article.gifUrl || article.imageUrl} 
                 alt={article.title} 
+                loading="lazy"
                 className="h-full w-auto max-w-full object-contain"
             />
-            {/* No overlay icon for GIF, just pure content */}
         </div>
       );
     }
@@ -146,10 +145,10 @@ const ArticleDetail: React.FC<ArticleDetailProps> = ({ article, onBack, onArticl
         <div className="w-full h-full relative group flex items-center justify-center">
             <img 
                 src={article.imageUrl} 
-                alt={article.title} 
+                alt={article.title}
+                loading="lazy" 
                 className="h-full w-auto max-w-full object-contain"
             />
-            {/* No Play Icon for static images */}
         </div>
     );
   };

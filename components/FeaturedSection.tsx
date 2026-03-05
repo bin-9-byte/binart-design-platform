@@ -62,7 +62,8 @@ const FeaturedSection: React.FC<FeaturedSectionProps> = ({ id, title = "Featured
                 <div className="absolute inset-0 bg-black/[0.01] group-hover:bg-black/0 dark:bg-white/10 dark:group-hover:bg-transparent transition-colors duration-base ease-standard z-10"></div>
                 <img 
                   src={article.imageUrl} 
-                  alt={article.title} 
+                  alt={article.title}
+                  loading="lazy"
                   className={`w-full h-full object-cover transform transition-transform duration-slow ease-standard ${
                     transitionId === uniqueKey ? 'scale-100' : 'group-hover:scale-105'
                   }`}

@@ -7,7 +7,7 @@ export const ARTICLE_U2: Article = {
   author: 'Binart Team',
   date: 'Nov 15, 2024',
   readTime: '8 min',
-  imageUrl: '/images/articles/u02/hero.webp',
+  imageUrl: '/images/articles/u02/hero.jpg',
   excerpt: '负责海外欧卡风格游戏素材绘制，主导 IP Lora 模型训练，解决特征保持与泛化问题，将场景图绘制效率提升 75%。',
   sections: ['UX&UI'],
   isFeatured: true,

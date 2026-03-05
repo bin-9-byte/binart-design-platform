@@ -14,7 +14,8 @@ const ToolGallery: React.FC<ToolGalleryProps> = ({ tool }) => {
         {tool.cover ? (
           <img 
             src={tool.cover} 
-            alt={`${tool.name} cover`} 
+            alt={`${tool.name} cover`}
+            loading="lazy" 
             className="w-full h-auto object-cover"
           />
         ) : (
@@ -30,7 +31,8 @@ const ToolGallery: React.FC<ToolGalleryProps> = ({ tool }) => {
           <div key={i} className="bg-surface/5 overflow-hidden">
             <img 
               src={img} 
-              alt={`${tool.name} screenshot ${i+1}`} 
+              alt={`${tool.name} screenshot ${i+1}`}
+              loading="lazy" 
               className="w-full h-auto object-cover"
             />
           </div>

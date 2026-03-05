@@ -127,7 +127,8 @@ const TopicShowcase: React.FC<TopicShowcaseProps> = ({ onArticleSelect, transiti
                         <div className="absolute inset-0 bg-black/[0.01] group-hover:bg-black/0 dark:bg-white/10 dark:group-hover:bg-transparent transition-colors duration-base ease-standard z-10"></div>
                         <img 
                             src={item.imageUrl} 
-                            alt={item.title} 
+                            alt={item.title}
+                            loading="lazy"
                             className={`w-full h-full object-cover transition-[filter,transform] duration-slow ease-standard ${
                                 transitionId === uniqueKey 
                                     ? 'filter-none grayscale-0 scale-100' 

@@ -18,7 +18,8 @@ export const ImageBlock: React.FC<{ block: ContentBlock }> = ({ block }) => (
   <div className="my-12 w-full">
     <img 
         src={block.src} 
-        alt={block.alt || 'Article image'} 
+        alt={block.alt || 'Article image'}
+        loading="lazy" 
         className="block w-full h-auto rounded-sm"
     />
     {block.caption && (
@@ -47,7 +48,7 @@ export const QuoteBlock: React.FC<{ block: ContentBlock; variant?: 'default' | '
 export const GalleryBlock: React.FC<{ block: ContentBlock }> = ({ block }) => (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-12">
         {block.images?.map((img, i) => (
-            <img key={i} src={img} className="block w-full h-auto rounded-sm" alt="Gallery item" />
+            <img key={i} src={img} className="block w-full h-auto rounded-sm" alt="Gallery item" loading="lazy" />
         ))}
     </div>
 );
@@ -98,7 +99,7 @@ export const PersonaBlock: React.FC<{ block: ContentBlock }> = ({ block }) => (
     <div className="my-12 p-8 bg-white/5 rounded-lg border border-white/10 flex flex-col md:flex-row gap-8 items-start">
         {block.src && (
             <div className="w-24 h-24 md:w-32 md:h-32 flex-shrink-0 rounded-full overflow-hidden bg-white/10">
-                <img src={block.src} alt={block.title || 'Persona'} className="w-full h-full object-cover" />
+                <img src={block.src} alt={block.title || 'Persona'} className="w-full h-full object-cover" loading="lazy" />
             </div>
         )}
         <div className="flex-1">
@@ -133,7 +134,7 @@ export const GridBlock: React.FC<{ block: ContentBlock }> = ({ block }) => {
                 <div key={i} className="bg-white/5 p-6 rounded-lg border border-white/5">
                     {item.image && (
                         <div className="mb-4 rounded overflow-hidden aspect-video bg-black/20">
-                            <img src={item.image} alt={item.title} className="w-full h-full object-cover" />
+                            <img src={item.image} alt={item.title} className="w-full h-full object-cover" loading="lazy" />
                         </div>
                     )}
                     {item.title && <h4 className="font-display font-bold text-lg text-cream mb-2">{item.title}</h4>}
@@ -182,7 +183,7 @@ export const ComparisonBlock: React.FC<{ block: ContentBlock }> = ({ block }) =>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
                 <div className="relative rounded-lg overflow-hidden border border-white/10">
-                    <img src={block.imageBefore} alt="Before" className="w-full h-auto" />
+                    <img src={block.imageBefore} alt="Before" className="w-full h-auto" loading="lazy" />
                     <div className="absolute top-2 left-2 px-2 py-1 bg-black/60 backdrop-blur text-xs font-mono text-white rounded">
                         {block.labelBefore || 'BEFORE'}
                     </div>
@@ -190,7 +191,7 @@ export const ComparisonBlock: React.FC<{ block: ContentBlock }> = ({ block }) =>
             </div>
             <div className="space-y-2">
                 <div className="relative rounded-lg overflow-hidden border border-white/10">
-                    <img src={block.imageAfter} alt="After" className="w-full h-auto" />
+                    <img src={block.imageAfter} alt="After" className="w-full h-auto" loading="lazy" />
                     <div className="absolute top-2 left-2 px-2 py-1 bg-accent-orange text-xs font-mono text-white rounded">
                         {block.labelAfter || 'AFTER'}
                     </div>

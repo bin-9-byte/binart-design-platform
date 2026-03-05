@@ -195,6 +195,7 @@ const Hero: React.FC = () => {
             muted
             loop
             playsInline
+            preload="auto"
             style={{
               filter: `brightness(${videoBrightness.toFixed(3)}) saturate(${videoSaturate.toFixed(3)}) contrast(${videoContrast.toFixed(3)})`
             }}

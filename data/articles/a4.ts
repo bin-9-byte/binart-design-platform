@@ -9,7 +9,7 @@ export const ARTICLE_A4 = {
   readTime: '6 min',
   excerpt:
     '为筑梦岛 App 定制训练乙女人像风格 LoRA：从需求具象化到数据预处理，再到多版本迭代对比与最终上线效果收敛。',
-  imageUrl: '/images/articles/a04/hero.webp', // Static image for card view
+  imageUrl: '/images/articles/a04/hero.jpg', // Static image for card view
   sections: ['AIGC'],
   isFeatured: true, // Animated GIF for detail view
   isAigc: true,
