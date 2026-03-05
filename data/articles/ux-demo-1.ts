@@ -3,7 +3,7 @@ import type { Article } from '../../types';
 export const ARTICLE_UX_DEMO_1 = {
   id: 'ux-demo-1',
   title: 'UX-demo',
-  category: 'UX Case Study',
+  category: 'Template',
   author: 'Design Team',
   date: 'Oct 20, 2024',
   readTime: '10 min',
@@ -11,7 +11,7 @@ export const ARTICLE_UX_DEMO_1 = {
     'A comprehensive overhaul of a mobile banking experience, focusing on trust, speed, and accessibility.',
   imageUrl:
     'https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80&w=1600',
-  sections: ['UX', 'UI'],
+  sections: ['UX&UI'],
   isFeatured: false,
   mediaType: 'image',
   blocks: [

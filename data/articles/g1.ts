@@ -1,16 +1,17 @@
-import type { Article } from '../../types';
+import { Article, Category } from '../../types';
 
 export const ARTICLE_G1 = {
   id: 'g1',
   title: '残碑',
-  category: 'UI',
+  category: Category.UI_DESIGN,
   author: 'BINART Studio',
   date: 'Oct 01, 2024',
   readTime: '7 min',
   excerpt: 'A practical workflow to turn messy requirements into a clear design plan.',
   imageUrl: '/images/articles/g01/hero.webp',
-  sections: ['UI'],
+  sections: ['UX&UI'],
   isFeatured: false,
+  isUxUi: true,
   mediaType: 'image',
   blocks: [
     {

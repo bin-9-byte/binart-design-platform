@@ -124,14 +124,14 @@ const TopicShowcase: React.FC<TopicShowcaseProps> = ({ onArticleSelect, transiti
                         className="relative w-full h-full overflow-hidden bg-charcoal rounded-sm z-10"
                         style={transitionId === uniqueKey ? { viewTransitionName: 'hero-image' } : undefined}
                     >
-                        <div className="absolute inset-0 bg-black/[0.04] group-hover:bg-black/[0.02] dark:bg-white/10 dark:group-hover:bg-transparent transition-colors duration-base ease-standard z-10"></div>
+                        <div className="absolute inset-0 bg-black/[0.01] group-hover:bg-black/0 dark:bg-white/10 dark:group-hover:bg-transparent transition-colors duration-base ease-standard z-10"></div>
                         <img 
                             src={item.imageUrl} 
                             alt={item.title} 
                             className={`w-full h-full object-cover transition-[filter,transform] duration-slow ease-standard ${
                                 transitionId === uniqueKey 
                                     ? 'filter-none grayscale-0 scale-100' 
-                                    : 'filter grayscale group-hover:grayscale-0 transform scale-100 group-hover:scale-110'
+                                    : 'filter group-hover:grayscale-0 transform scale-100 group-hover:scale-110'
                             }`}
                         />
                     </div>

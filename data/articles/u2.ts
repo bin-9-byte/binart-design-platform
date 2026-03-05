@@ -9,8 +9,10 @@ export const ARTICLE_U2: Article = {
   readTime: '8 min',
   imageUrl: '/images/articles/u02/hero.webp',
   excerpt: '负责海外欧卡风格游戏素材绘制，主导 IP Lora 模型训练，解决特征保持与泛化问题，将场景图绘制效率提升 75%。',
-  sections: ['UI', 'AIGC'],
+  sections: ['UX&UI'],
   isFeatured: true,
+  isUxUi: true,
+  isAigc: false,
   mediaType: 'image',
   blocks: [
     {

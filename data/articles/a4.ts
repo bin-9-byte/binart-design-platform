@@ -1,9 +1,9 @@
-import type { Article } from '../../types';
+import { Article, Category } from '../../types';
 
 export const ARTICLE_A4 = {
   id: 'a4',
   title: '乙女风格模型',
-  category: 'model train',
+  category: Category.AIGC,
   author: 'Ma Bin',
   date: 'Oct 05, 2024',
   readTime: '6 min',
@@ -12,6 +12,7 @@ export const ARTICLE_A4 = {
   imageUrl: '/images/articles/a04/hero.webp', // Static image for card view
   sections: ['AIGC'],
   isFeatured: true, // Animated GIF for detail view
+  isAigc: true,
   mediaType: 'image',
   //videoUrl: '/images/articles/a03/hero.mp4', // Local video source
   blocks: [

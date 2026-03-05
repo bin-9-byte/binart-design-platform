@@ -1,16 +1,17 @@
-import type { Article } from '../../types';
+import { Article, Category } from '../../types';
 
 export const ARTICLE_U1 = {
   id: 'u1',
   title: '电商生成工具',
-  category: 'UX Research',
+  category: Category.UX_RESEARCH,
   author: 'Marcus Chen',
   date: 'Oct 10, 2024',
   readTime: '12 min',
   excerpt: '为运营与商家提供“商品素材一键生成”的工作台，聚焦效率、可控性与一致性。',
   imageUrl: '/images/articles/u01/hero.png',
-  sections: ['UX'],
+  sections: ['UX&UI'],
   isFeatured: true,
+  isUxUi: true,
   mediaType: 'image',
   gifUrl:
     'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMzM0YjM0MzQ1N2FmMzQ1N2FmMzQ1N2FmMzQ1N2Fm/3o7TKSjRrfIPjeiVyM/giphy.gif',

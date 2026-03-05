@@ -16,7 +16,13 @@ interface FeaturedSectionProps {
 const FeaturedSection: React.FC<FeaturedSectionProps> = ({ id, title = "Featured Stories", section, featuredOnly, onArticleSelect, transitionId }) => {
   let articles = FEATURED_ARTICLES;
   if (section) {
-    articles = articles.filter((article) => article.sections?.includes(section));
+    articles = articles.filter((article) => {
+      if (section === 'UX&UI') return Boolean(article.isUxUi);
+      if (section === 'AIGC') return Boolean(article.isAigc);
+      if (section === 'architecture') return Boolean(article.isArchitecture);
+      if (section === 'photography') return Boolean(article.isPhotography);
+      return Boolean(article.sections?.includes(section));
+    });
   }
   if (featuredOnly) {
     articles = articles.filter((article) => article.isFeatured);
@@ -53,7 +59,7 @@ const FeaturedSection: React.FC<FeaturedSectionProps> = ({ id, title = "Featured
                 className="relative overflow-hidden aspect-[16/9] mb-6 rounded-sm bg-surface"
                 style={transitionId === uniqueKey ? { viewTransitionName: 'hero-image' } : undefined}
               >
-                <div className="absolute inset-0 bg-black/[0.04] group-hover:bg-black/[0.02] dark:bg-white/10 dark:group-hover:bg-transparent transition-colors duration-base ease-standard z-10"></div>
+                <div className="absolute inset-0 bg-black/[0.01] group-hover:bg-black/0 dark:bg-white/10 dark:group-hover:bg-transparent transition-colors duration-base ease-standard z-10"></div>
                 <img 
                   src={article.imageUrl} 
                   alt={article.title} 

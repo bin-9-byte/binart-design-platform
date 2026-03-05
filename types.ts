@@ -106,6 +106,10 @@ export interface Article {
   readTime: string;
   sections?: string[];
   isFeatured?: boolean;
+  isUxUi?: boolean;
+  isAigc?: boolean;
+  isArchitecture?: boolean;
+  isPhotography?: boolean;
   blocks?: ContentBlock[]; // Flexible content structure
   mediaType?: 'image' | 'video' | 'gif';
   videoUrl?: string; // For video content
@@ -122,15 +126,19 @@ export interface Tool {
   pricing?: 'Free' | 'Paid' | 'Freemium';
   platform?: string[];
   link?: string;
+  ctaLabel?: string; // e.g. "Try Now", "Download"
   longDescription?: string;
   tags?: string[];
+  // Portfolio Showcase Fields
+  cover?: string;      // Hero cover image
+  images?: string[];   // Gallery images
 }
 
 export enum Category {
   ALL = 'All',
   UX_RESEARCH = 'UX Research',
-  VISUAL_DESIGN = 'Visual Design',
+  ARCHITECTURAL_DESIGN = 'Architectural Design',
   UI_DESIGN = 'UI Design',
-  INTERACTION = 'Interaction',
-  STRATEGY = 'Strategy'
+  PHOTOGRAPHY = 'Photography',
+  AIGC = 'Aigc'
 }

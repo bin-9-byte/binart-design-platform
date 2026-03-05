@@ -12,7 +12,8 @@ export const ARTICLE_TEMPLATE_BEHANCE = {
   imageUrl: 'https://picsum.photos/seed/behance-template-hero/1600/900',
   mediaType: 'image',
   sections: ['photography'],
-  isFeatured: true,
+  isFeatured: false,
+  isPhotography: false,
   blocks: [
     {
       type: 'quote',
@@ -186,4 +187,3 @@ export const ARTICLE_TEMPLATE_BEHANCE = {
     }
   ]
 } satisfies Article;
-

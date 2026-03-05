@@ -56,7 +56,7 @@ const ArticleDetail: React.FC<ArticleDetailProps> = ({ article, onBack, onArticl
   const videoRef = useRef<HTMLVideoElement>(null);
 
   // Find next article logic
-  const allArticles = [...FEATURED_ARTICLES, ...TOPIC_DATA];
+  const allArticles = TOPIC_DATA;
   const currentIndex = allArticles.findIndex(a => a.id === article.id);
   // Default to first article if not found (shouldn't happen) or loop back to start
   const nextArticle = currentIndex >= 0 

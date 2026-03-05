@@ -1,9 +1,5 @@
 # Binart Design Platform
 
-<div align="center">
-  <img src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" alt="Binart Platform Banner" width="100%" />
-</div>
-
 <br />
 
 Binart Design Platform 是一个极简主义、内容驱动的设计分享平台。它融合了大胆的排版、沉浸式布局和动态视觉叙事，旨在为设计师提供灵感与工具。

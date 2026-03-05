@@ -3,15 +3,16 @@ import { Article, Category } from '../../types';
 export const ARTICLE_A2: Article = {
   id: 'a2',
   title: '阿尔山乡村艺术季',
-  category: Category.VISUAL_DESIGN,
+  category: Category.ARCHITECTURAL_DESIGN,
   author: 'Binart Team',
   date: 'Mar 04, 2026',
   readTime: '7 min',
   imageUrl: '/images/articles/a02/hero.webp',
   excerpt:
-    '以“自然在场、乡村共创”为核心叙事，完成艺术季视觉基调、导视体系与线上传播物料的首版搭建；当前为占位稿，细节与图片资源后续补充。',
+    '以“自然在场、乡村共创”为核心叙事，完成艺术季视觉基调、导视体系与线上传播物料的首版搭建。',
   sections: ['architecture'],
   isFeatured: true,
+  isArchitecture: true,
   mediaType: 'image',
   blocks: [
     {

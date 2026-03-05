@@ -1,17 +1,18 @@
-import type { Article } from '../../types';
+import { Article, Category } from '../../types';
 
 export const ARTICLE_P1 = {
   id: 'p1',
   title: 'Tokyo',
-  category: 'Photography',
+  category: Category.PHOTOGRAPHY,
   author: 'Binart Team',
   date: 'Mar 04, 2026',
   readTime: '6 min',
   excerpt:
     '从新宿的霓虹到清晨的高架桥阴影：一组关于东京的叙事摄影，记录“人流与静止”的交替。',
   imageUrl: 'https://picsum.photos/seed/tokyo-hero/1600/900',
-  sections: ['photography'],
-  isFeatured: true,
+  //sections: ['photography'],
+  isFeatured: false,
+  isPhotography: true,
   mediaType: 'image',
   blocks: [
     {
@@ -93,4 +94,3 @@ export const ARTICLE_P1 = {
     }
   ]
 } satisfies Article;
-

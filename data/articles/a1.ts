@@ -1,9 +1,9 @@
-import type { Article } from '../../types';
+import { Article, Category } from '../../types';
 
 export const ARTICLE_A1 = {
   id: 'a1',
   title: 'CHAGEE 和萌友们',
-  category: 'Visual Design',
+  category: Category.AIGC,
   author: 'Ma Bin',
   date: 'Aug 12, 2025',
   readTime: '8 min',
@@ -12,6 +12,7 @@ export const ARTICLE_A1 = {
   imageUrl: '/images/articles/a01/hero.webp',
   sections: ['AIGC'],
   isFeatured: true,
+  isAigc: true,
   mediaType: 'image',
   blocks: [
     {

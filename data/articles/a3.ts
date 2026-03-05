@@ -1,9 +1,9 @@
-import type { Article } from '../../types';
+import { Article, Category } from '../../types';
 
 export const ARTICLE_A3 = {
   id: 'a3',
   title: 'SAMSUNG 绘图助手',
-  category: 'comfyui',
+  category: Category.AIGC,
   author: 'Ma Bin',
   date: 'Oct 05, 2024',
   readTime: '8 min',
@@ -12,6 +12,7 @@ export const ARTICLE_A3 = {
   imageUrl: '/images/articles/a03/hero.png', // Static image for card view
   sections: ['AIGC'],
   isFeatured: true, // Animated GIF for detail view
+  isAigc: true,
   mediaType: 'video',
   videoUrl: '/images/articles/a03/hero.mp4', // Local video source
   blocks: [
