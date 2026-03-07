@@ -17,7 +17,8 @@ export const ARTICLE_U2: Article = {
   blocks: [
     {
       type: 'quote',
-      text: '用 AI 保持风格一致的同时提升产能，验证 AI 在美术管线中的提效能力。'
+      text: '用 AI 保持风格一致的同时提升产能，验证 AI 在美术管线中的提效能力。',
+      caption: '核心收获'
     },
     {
       type: 'image',
@@ -27,15 +28,38 @@ export const ARTICLE_U2: Article = {
     },
     {
       type: 'h2',
-      text: 'What I Did'
+      text: '项目概览'
     },
     {
       type: 'paragraph',
       text: '负责海外欧卡风格游戏素材绘制，参与美术资源（icon、button）设计，丰富资源库，并匹配主题方向。并主导欧卡风格 IP Lora 模型训练，解决特征保持与泛化问题。'
     },
     {
+      type: 'list',
+      listType: 'ul',
+      items: [
+        '海外欧卡风格素材绘制与主题适配',
+        'icon、button 资源设计并扩充资源库',
+        '主导 IP Lora 训练并解决特征保持与泛化',
+        '场景图绘制效率提升 75%'
+      ]
+    },
+    {
       type: 'h2',
-      text: 'UI Design'
+      text: '01. UI Design'
+    },
+    {
+      type: 'paragraph',
+      text: '围绕欧卡风格建立统一的 UI 视觉语言，重点聚焦在按钮与图标等核心资源。'
+    },
+    {
+      type: 'list',
+      listType: 'ul',
+      items: [
+        '欧卡风格素材绘制，保证画面质感与风格统一',
+        '按钮与图标资源设计，在安全区内控制构图与元素密度',
+        '结合节日活动主题匹配元素，帮助用户快速理解主题'
+      ]
     },
     {
       type: 'image',
@@ -61,7 +85,24 @@ export const ARTICLE_U2: Article = {
     },
     {
       type: 'h2',
-      text: 'AI 提效流程'
+      text: '02. AIGC'
+    },
+    {
+      type: 'paragraph',
+      text: '以欧卡风格 IP Lora 训练为核心，确保风格一致性与可控的生成质量。'
+    },
+    {
+      type: 'list',
+      listType: 'ul',
+      items: [
+        '解决特征保持与泛化问题，提升一致性',
+        '在美术管线内验证提效能力并持续迭代',
+        '通过量化指标衡量产能与质量提升'
+      ]
+    },
+    {
+      type: 'h2',
+      text: 'AIGC · 提效流程'
     },
     {
       type: 'process',
@@ -70,6 +111,10 @@ export const ARTICLE_U2: Article = {
         { title: '训练策略', description: '主导 IP Lora 模型训练，解决特征保持与泛化问题。' },
         { title: '验证迭代', description: '在真实美术管线中验证效果，持续优化模型表现。' }
       ]
+    },
+    {
+      type: 'h2',
+      text: 'AIGC · 成果量化'
     },
     {
       type: 'stats',
@@ -81,7 +126,7 @@ export const ARTICLE_U2: Article = {
     },
     {
       type: 'h2',
-      text: '展示生成效果'
+      text: 'AIGC · 生成效果展示'
     },
     {
       type: 'image',
